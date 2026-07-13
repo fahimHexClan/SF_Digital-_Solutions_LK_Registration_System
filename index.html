@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SF Digital Solutions LK — Course Registration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sf-navy:#0B1A45;
+    --sf-navy-2:#13245e;
+    --sf-blue:#1E5CFF;
+    --sf-purple:#8B2FD6;
+    --sf-purple-2:#B23FE0;
+    --sf-bg:#F5F6FB;
+    --sf-panel:#FFFFFF;
+    --sf-line:#E4E7F2;
+    --sf-text:#141A33;
+    --sf-muted:#6B7196;
+    --sf-green:#17A673;
+    --sf-red:#E5484D;
+    --sf-orange:#F5811F;
+    --radius:16px;
+    --shadow:0 10px 30px rgba(20,26,51,0.08);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:
+      radial-gradient(1200px 500px at 100% -10%, rgba(139,47,214,0.12), transparent 60%),
+      radial-gradient(900px 500px at -10% 0%, rgba(30,92,255,0.10), transparent 55%),
+      var(--sf-bg);
+    color:var(--sf-text);
+    min-height:100vh;
+    padding:32px 16px 60px;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:920px;margin:0 auto;position:relative;}
+
+  /* Header */
+  .brandbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:24px;flex-wrap:wrap;}
+  .brandbar .left{display:flex;align-items:center;gap:14px;}
+  .brandmark{
+    width:48px;height:48px;border-radius:12px;
+    background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Sora',sans-serif;font-weight:800;color:white;font-size:18px;
+    box-shadow:var(--shadow);flex-shrink:0;
+  }
+  .brandtext h1{font-family:'Sora',sans-serif;font-size:19px;margin:0;letter-spacing:0.2px;color:var(--sf-navy);}
+  .brandtext p{margin:2px 0 0;font-size:12.5px;color:var(--sf-muted);}
+  .social-proof{
+    display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--sf-line);
+    border-radius:999px;padding:7px 14px;font-size:11.5px;color:var(--sf-navy);font-weight:600;
+    box-shadow:var(--shadow);
+  }
+  .social-proof .avatars{display:flex;}
+  .social-proof .avatars span{
+    width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));
+    border:2px solid #fff;margin-left:-7px;display:inline-block;
+  }
+  .social-proof .avatars span:first-child{margin-left:0;}
+
+  .hero{
+    background:linear-gradient(120deg,var(--sf-navy) 0%, var(--sf-navy-2) 55%, #2a1861 100%);
+    border-radius:20px;padding:26px 26px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden;
+  }
+  .hero::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(139,47,214,0.55),transparent 70%);}
+  .hero h2{font-family:'Sora',sans-serif;font-size:22px;margin:0 0 6px;position:relative;}
+  .hero p{margin:0;color:#C7CCEE;font-size:13.5px;position:relative;max-width:560px;}
+
+  /* Stepper */
+  .stepper-wrap{margin:22px 0 20px;}
+  .progress-track{height:4px;background:var(--sf-line);border-radius:99px;overflow:hidden;margin-bottom:16px;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--sf-blue),var(--sf-purple));border-radius:99px;transition:width .4s ease;}
+  .stepper{display:flex;justify-content:space-between;position:relative;gap:2px;}
+  .step{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;flex:1;min-width:0;}
+  .step .dot{
+    width:30px;height:30px;border-radius:50%;background:#fff;border:2px solid var(--sf-line);
+    display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:700;
+    font-size:12px;color:var(--sf-muted);transition:all .25s ease;
+  }
+  .step .label{margin-top:7px;font-size:9.5px;color:var(--sf-muted);text-align:center;font-weight:600;letter-spacing:.2px;max-width:68px;line-height:1.25;}
+  .step.active .dot{background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));border-color:transparent;color:#fff;box-shadow:0 4px 14px rgba(139,47,214,0.35);transform:scale(1.08);}
+  .step.active .label{color:var(--sf-navy);}
+  .step.done .dot{background:var(--sf-green);border-color:transparent;color:#fff;}
+  .step.done .dot::after{content:"✓";}
+
+  /* Panel */
+  .panel{background:var(--sf-panel);border:1px solid var(--sf-line);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;animation:fadeUp .35s ease;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .panel h3{font-family:'Sora',sans-serif;font-size:17px;margin:0 0 4px;color:var(--sf-navy);}
+  .panel .sub{color:var(--sf-muted);font-size:13px;margin:0 0 20px;}
+
+  /* Course cards */
+  .course-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:640px){.course-grid{grid-template-columns:1fr;}}
+  .course-card{
+    border:1.5px solid var(--sf-line);border-radius:14px;padding:16px;cursor:pointer;
+    transition:all .18s ease;position:relative;display:flex;gap:12px;align-items:flex-start;
+  }
+  .course-card:hover{border-color:var(--sf-blue);transform:translateY(-2px);}
+  .course-card.selected{border-color:var(--sf-purple);background:linear-gradient(180deg,rgba(139,47,214,0.05),rgba(30,92,255,0.03));}
+  .course-card .cicon{
+    width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));
+    display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+  }
+  .course-card h4{margin:0 0 4px;font-size:13.5px;font-family:'Sora',sans-serif;}
+  .course-card .cdesc{margin:0 0 8px;font-size:11px;color:var(--sf-muted);line-height:1.5;}
+  .course-card .cfee{font-size:12px;color:var(--sf-muted);}
+  .course-card .cfee .strike{text-decoration:line-through;color:#9096b8;margin-right:6px;}
+  .course-card .cfee .now{color:var(--sf-green);font-weight:700;}
+  .course-card .check{position:absolute;top:12px;right:12px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--sf-line);background:#fff;}
+  .course-card.selected .check{background:var(--sf-purple);border-color:var(--sf-purple);}
+  .course-card.selected .check::after{content:"✓";color:#fff;font-size:11px;display:block;text-align:center;line-height:17px;}
+
+  /* Fee summary bar */
+  .fee-summary{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:linear-gradient(120deg,#FFF7ED,#FFF1E6);border:1px solid #FBDCC0;border-radius:14px;padding:14px 18px;margin-bottom:20px;}
+  .fee-summary .left .lbl{font-size:11px;color:var(--sf-muted);text-transform:uppercase;letter-spacing:.4px;}
+  .fee-summary .left .amt{font-family:'Sora',sans-serif;font-size:15px;}
+  .fee-summary .left .strike{color:#9096b8;text-decoration:line-through;font-weight:500;margin-right:8px;}
+  .fee-summary .badge{background:var(--sf-red);color:#fff;font-size:11px;font-weight:700;padding:6px 12px;border-radius:999px;letter-spacing:.2px;white-space:nowrap;}
+
+  /* Payment plan cards */
+  .plan-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  @media(max-width:700px){.plan-grid{grid-template-columns:1fr;}}
+  .plan-card{border:1.5px solid var(--sf-line);border-radius:14px;padding:18px;cursor:pointer;transition:all .2s ease;position:relative;}
+  .plan-card:hover{border-color:var(--sf-blue);}
+  .plan-card.selected{border-color:var(--sf-purple);background:linear-gradient(180deg,rgba(139,47,214,0.05),rgba(30,92,255,0.03));}
+  .plan-card .check{position:absolute;top:14px;right:14px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--sf-line);background:#fff;}
+  .plan-card.selected .check{background:var(--sf-purple);border-color:var(--sf-purple);}
+  .plan-card.selected .check::after{content:"✓";color:#fff;font-size:11px;display:block;text-align:center;line-height:17px;}
+  .plan-card .tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;margin-bottom:10px;letter-spacing:.2px;}
+  .tag-best{background:#E7F8F1;color:var(--sf-green);}
+  .tag-hot{background:#FDEAEA;color:var(--sf-red);}
+  .tag-flex{background:#EDF1FF;color:var(--sf-blue);}
+  .plan-card h4{margin:0 0 6px;font-size:14.5px;font-family:'Sora',sans-serif;}
+  .plan-card .price{font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:var(--sf-navy);}
+  .plan-card .price small{font-size:11px;font-weight:600;color:var(--sf-muted);}
+  .plan-card p{margin:8px 0 0;font-size:11.5px;color:var(--sf-muted);line-height:1.5;}
+  .plan-card .save{color:var(--sf-green);font-size:11.5px;font-weight:700;margin-top:6px;}
+  .countdown{margin-top:8px;font-size:11px;font-weight:700;color:var(--sf-red);display:flex;align-items:center;gap:5px;}
+
+  /* Offers strip */
+  .offers-title{font-size:12.5px;font-weight:700;color:var(--sf-navy);margin:22px 0 10px;display:flex;align-items:center;gap:6px;}
+  .offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:560px){.offer-grid{grid-template-columns:1fr;}}
+  .offer-card{display:flex;align-items:flex-start;gap:10px;border:1.5px dashed var(--sf-line);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all .2s;}
+  .offer-card:hover{border-color:var(--sf-purple);}
+  .offer-card.on{border-style:solid;border-color:var(--sf-green);background:#F3FBF8;}
+  .offer-card input{margin-top:2px;accent-color:var(--sf-green);width:16px;height:16px;flex-shrink:0;}
+  .offer-card .txt h5{margin:0 0 3px;font-size:12.5px;font-family:'Sora',sans-serif;}
+  .offer-card .txt p{margin:0;font-size:11px;color:var(--sf-muted);line-height:1.4;}
+  .offer-card .txt .off{color:var(--sf-green);font-weight:700;}
+
+  .amount-box{margin-top:20px;background:var(--sf-navy);border-radius:14px;padding:18px 20px;color:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;position:relative;overflow:hidden;}
+  .amount-box::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(139,47,214,0.5),transparent 70%);}
+  .amount-box .lbl{font-size:11.5px;color:#B7BEE8;}
+  .amount-box .val{font-family:'Sora',sans-serif;font-size:24px;font-weight:800;}
+  .amount-box .note{font-size:11px;color:#9AA3D6;margin-top:3px;}
+
+  /* Upload */
+  .upload-zone{border:2px dashed var(--sf-line);border-radius:14px;padding:34px 20px;text-align:center;cursor:pointer;transition:all .2s;}
+  .upload-zone:hover{border-color:var(--sf-blue);background:#F8F9FF;}
+  .upload-zone.drag{border-color:var(--sf-purple);background:#F8F5FF;}
+  .upload-zone .icon{font-size:30px;margin-bottom:8px;}
+  .upload-zone h4{margin:0 0 4px;font-size:14px;font-family:'Sora',sans-serif;}
+  .upload-zone p{margin:0;font-size:12px;color:var(--sf-muted);}
+  .file-chip{margin-top:14px;display:flex;align-items:center;gap:12px;background:#F1F4FF;border:1px solid var(--sf-line);border-radius:10px;padding:10px 14px;font-size:13px;}
+  .file-chip img{width:38px;height:38px;object-fit:cover;border-radius:6px;flex-shrink:0;}
+  .file-chip .fname{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .file-chip .x{cursor:pointer;color:var(--sf-red);font-weight:700;flex-shrink:0;}
+  .uploaded-note{color:var(--sf-green);font-size:12.5px;margin-top:10px;display:flex;align-items:center;gap:6px;font-weight:600;}
+
+  /* Form */
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:560px){.form-grid{grid-template-columns:1fr;}}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field.full{grid-column:1/-1;}
+  .field label{font-size:12.5px;font-weight:600;color:var(--sf-navy);}
+  .field .req{color:var(--sf-red);}
+  .field input, .field select{border:1.5px solid var(--sf-line);border-radius:10px;padding:11px 13px;font-size:13.5px;font-family:'Inter',sans-serif;color:var(--sf-text);background:#fff;outline:none;transition:border-color .15s;}
+  .field input:focus, .field select:focus{border-color:var(--sf-blue);}
+  .field small.err{color:var(--sf-red);font-size:11px;display:none;}
+  .field.invalid input, .field.invalid select{border-color:var(--sf-red);}
+  .field.invalid small.err{display:block;}
+  .selected-course-chip{display:flex;align-items:center;justify-content:space-between;background:#F1F4FF;border:1px solid var(--sf-line);border-radius:10px;padding:12px 14px;font-size:13px;grid-column:1/-1;}
+  .selected-course-chip .edit{color:var(--sf-blue);font-size:12px;font-weight:600;cursor:pointer;}
+
+  /* Review */
+  .review-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--sf-line);border-radius:12px;overflow:hidden;}
+  @media(max-width:560px){.review-list{grid-template-columns:1fr;}}
+  .review-list li{padding:13px 16px;border-bottom:1px solid var(--sf-line);font-size:13px;}
+  .review-list li span.k{display:block;color:var(--sf-muted);font-size:11px;margin-bottom:3px;text-transform:uppercase;letter-spacing:.3px;}
+  .checklist{margin:20px 0 0;padding:0;list-style:none;}
+  .checklist li{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--sf-navy);padding:5px 0;}
+  .checklist li::before{content:"✓";width:18px;height:18px;background:var(--sf-green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;}
+
+  /* Success */
+  .success-wrap{text-align:center;padding:16px 10px 6px;position:relative;}
+  .success-circle{width:76px;height:76px;border-radius:50%;margin:0 auto 18px;background:linear-gradient(135deg,#17A673,#0E8F63);display:flex;align-items:center;justify-content:center;color:#fff;font-size:34px;box-shadow:0 10px 30px rgba(23,166,115,0.35);animation:pop .5s cubic-bezier(.34,1.56,.64,1);}
+  @keyframes pop{0%{transform:scale(0);}70%{transform:scale(1.12);}100%{transform:scale(1);}}
+  .success-wrap h3{font-size:20px;}
+  .success-wrap p{color:var(--sf-muted);font-size:13.5px;max-width:440px;margin:6px auto 0;}
+  .ref-box{margin:20px auto 0;max-width:360px;background:#F5F6FB;border:1px solid var(--sf-line);border-radius:12px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .ref-box .lbl{font-size:11px;color:var(--sf-muted);text-transform:uppercase;letter-spacing:.4px;}
+  .ref-box .val{font-family:'Sora',sans-serif;font-weight:700;color:var(--sf-navy);font-size:16px;margin-top:3px;}
+  .copy-btn{border:1.5px solid var(--sf-line);background:#fff;border-radius:8px;padding:8px 12px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--sf-navy);white-space:nowrap;transition:all .15s;}
+  .copy-btn:hover{border-color:var(--sf-blue);}
+  .success-actions{display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap;}
+  .btn-wa{background:#25D366;color:#fff;}
+  .btn-wa:hover{box-shadow:0 8px 18px rgba(37,211,102,0.35);}
+  .btn-outline{background:#fff;border:1.5px solid var(--sf-line);color:var(--sf-navy);}
+  .btn-outline:hover{border-color:var(--sf-blue);}
+
+  /* Buttons */
+  .actions{display:flex;justify-content:space-between;margin-top:26px;gap:12px;}
+  .btn{border:none;border-radius:10px;padding:12px 22px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .12s, box-shadow .12s;}
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));color:#fff;box-shadow:0 6px 18px rgba(139,47,214,0.28);}
+  .btn-primary:hover{box-shadow:0 8px 22px rgba(139,47,214,0.38);}
+  .btn-ghost{background:#fff;border:1.5px solid var(--sf-line);color:var(--sf-navy);}
+  .btn-ghost:hover{border-color:var(--sf-blue);}
+  .btn:disabled{opacity:.5;cursor:not-allowed;}
+
+  .footer-note{text-align:center;margin-top:22px;font-size:11.5px;color:var(--sf-muted);}
+  input[type=file]{display:none;}
+
+  /* Confetti */
+  .confetti-piece{position:fixed;top:-12px;width:8px;height:14px;z-index:9999;pointer-events:none;animation:confettiFall linear forwards;border-radius:2px;}
+  @keyframes confettiFall{
+    0%{transform:translateY(0) rotate(0deg);opacity:1;}
+    100%{transform:translateY(105vh) rotate(540deg);opacity:0.9;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brandbar">
+    <div class="left">
+      <div class="brandmark">SF</div>
+      <div class="brandtext">
+        <h1>SF Digital Solutions LK</h1>
+        <p>Web Design • Software • Digital Marketing • Classes & Training</p>
+      </div>
+    </div>
+    <div class="social-proof">
+      <div class="avatars"><span></span><span></span><span></span></div>
+      <span>128+ people enrolled this week</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h2>Course Registration</h2>
+    <p>Course select pannunga, payment plan choose pannunga, screenshot upload panni submit pannunga. Confirmation WhatsApp & Email மூலமா instant-a varum.</p>
+  </div>
+
+  <div class="stepper-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="stepper" id="stepper"></div>
+  </div>
+
+  <div class="panel" id="panel"></div>
+
+  <p class="footer-note">🔒 Ungal details securely SF Digital Solutions LK team-kku mattum anupattapadum.</p>
+</div>
+
+<script>
+/* ====== CONFIG — Fahim edit panunga idha ====== */
+const CONFIG = {
+  whatsappNumber: '94771234567',   // SF Digital Solutions LK business WhatsApp (country code without +)
+  googleScriptURL: ''              // Google Apps Script Web App URL paste pannunga auto-save to Google Sheets-ku (optional, free)
+};
+
+const COURSES = [
+  {id:'compbasics',name:'Computer Basics',              icon:'🖥️', total:8800, full:4800, today:4000, inst1:3500, inst2:3000, desc:'Keyboard & mouse handling, Windows basics, MS Word/Excel intro, internet, email & WhatsApp usage — perfect starting point for absolute beginners.'},
+  {id:'crypto',   name:'Crypto Trading Fundamentals', icon:'📈', total:8800, full:4800, today:4000, inst1:3500, inst2:3000, desc:'Blockchain basics, chart reading, wallet setup, buy/sell strategy & risk management for beginner traders.'},
+  {id:'ai',       name:'AI Tools for Business',        icon:'🤖', total:6800, full:3800, today:3200, inst1:2200, inst2:1600, desc:'ChatGPT, Canva AI, automation tools & prompt writing to save time and boost productivity at work.'},
+  {id:'marketing',name:'Digital Marketing Mastery',    icon:'📱', total:9800, full:5300, today:4500, inst1:3000, inst2:2300, desc:'Facebook & Instagram ads, SEO basics, content strategy and lead generation for small businesses.'},
+  {id:'msoffice', name:'MS Office Pro Package',        icon:'💻', total:5800, full:3200, today:2700, inst1:1800, inst2:1400, desc:'Advanced Word, Excel formulas, PowerPoint design & real office workflow templates.'},
+  {id:'design',   name:'Graphic Design Essentials',    icon:'🎨', total:7800, full:4300, today:3600, inst1:2500, inst2:1800, desc:'Canva & Photoshop basics, logo design, social media creatives and branding fundamentals.'},
+  {id:'korean',   name:'Korean Language — Beginner',   icon:'🇰🇷', total:6500, full:3600, today:3000, inst1:2000, inst2:1600, desc:'Hangul alphabet, everyday conversation, greetings & basic grammar for total beginners.'},
+];
+
+const state = {
+  step: 1,
+  courseId: null,
+  plan: 'full',
+  offerSocial: false,
+  offerRefer: false,
+  file: null,
+  filePreview: null,
+  refId: null,
+  data: { fullName:'', email:'', mobile:'', nic:'', address:'', amount:0, whatsapp:'' }
+};
+
+const steps = [
+  {id:1, label:"Select\nCourse"},
+  {id:2, label:"Payment\nPlan"},
+  {id:3, label:"Upload\nScreenshot"},
+  {id:4, label:"Registration\nForm"},
+  {id:5, label:"Review &\nSubmit"},
+  {id:6, label:"Done"}
+];
+
+let countdownTimer = null;
+
+function getCourse(){ return COURSES.find(c=>c.id===state.courseId) || null; }
+
+function renderStepper(){
+  const el = document.getElementById('stepper');
+  el.innerHTML = steps.map(s=>{
+    let cls = 'step';
+    if(s.id < state.step) cls += ' done';
+    else if(s.id === state.step) cls += ' active';
+    return `<div class="${cls}">
+      <div class="dot">${s.id < state.step ? '' : s.id}</div>
+      <div class="label">${s.label.replace('\n','<br>')}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('progressFill').style.width = ((state.step-1)/(steps.length-1)*100) + '%';
+}
+
+function fieldErr(id){ const f = document.getElementById('f_'+id); if(f) f.classList.add('invalid'); }
+function clearErrs(){ document.querySelectorAll('.field').forEach(f=>f.classList.remove('invalid')); }
+
+function referPrice(full){ return Math.round((full*0.625)/100)*100; }
+
+function calcAmount(){
+  const c = getCourse();
+  if(!c) return {due:0,label:'Amount Payable',note:''};
+  if(state.plan === 'today'){
+    return {due: c.today, label:'Amount Payable', note:'Limited-time today-only price — bonus offers not applicable on this plan'};
+  }
+  if(state.plan === 'installment'){
+    if(state.offerRefer){
+      const rp = referPrice(c.full);
+      return {due: rp, label:'Amount Payable (Refer & Earn)', note:`Refer & Earn applied — flat Rs. ${rp.toLocaleString()} total, installment overridden into a single payment`};
+    }
+    let second = c.inst2;
+    let note2 = `2nd Payment: Rs. ${c.inst2.toLocaleString()} before 8th session`;
+    if(state.offerSocial){
+      second = Math.max(c.inst2 - 800, 0);
+      note2 = `Social Media Offer applied (-Rs. 800) — 2nd Payment reduced to Rs. ${second.toLocaleString()} before 8th session`;
+    }
+    return {due: c.inst1, label:'1st Installment (Due Now)', note: `${note2} · Total: Rs. ${(c.inst1+second).toLocaleString()}`};
+  }
+  // Full Payment
+  let base = c.full;
+  let note = 'Full payment — one time, no installments';
+  if(state.offerRefer){
+    base = referPrice(c.full);
+    note = 'Refer & Earn applied — final price for the person who referred';
+  } else if(state.offerSocial){
+    base = Math.max(c.full - 800, 0);
+    note += ' · Social Media Offer applied (-Rs. 800)';
+  }
+  return {due: base, label:'Amount Payable', note};
+}
+
+function pad(n){ return n.toString().padStart(2,'0'); }
+function formatCountdown(){
+  const now = new Date();
+  const midnight = new Date(now);
+  midnight.setHours(24,0,0,0);
+  const diff = midnight - now;
+  const h = Math.floor(diff/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  return `${pad(h)}:${pad(m)}:${pad(s)}`;
+}
+
+function renderPanel(){
+  if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null; }
+  const p = document.getElementById('panel');
+
+  if(state.step === 1){
+    p.innerHTML = `
+      <h3>Step 1 — Select Your Course</h3>
+      <p class="sub">Padikanum-nu ninaikura course-a select pannunga — fee details kaanpikkum.</p>
+      <div class="course-grid">
+        ${COURSES.map(c=>`
+          <div class="course-card ${state.courseId===c.id?'selected':''}" onclick="selectCourse('${c.id}')">
+            <div class="check"></div>
+            <div class="cicon">${c.icon}</div>
+            <div>
+              <h4>${c.name}</h4>
+              <p class="cdesc">${c.desc}</p>
+              <div class="cfee"><span class="strike">Rs. ${c.total.toLocaleString()}</span><span class="now">From Rs. ${c.today.toLocaleString()}</span></div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="actions">
+        <div></div>
+        <button class="btn btn-primary" onclick="goNext()" ${state.courseId?'':'disabled'}>Next →</button>
+      </div>
+    `;
+  }
+
+  else if(state.step === 2){
+    const c = getCourse();
+    const a = calcAmount();
+    const referAmt = referPrice(c.full);
+    p.innerHTML = `
+      <h3>Step 2 — Choose Payment Plan</h3>
+      <p class="sub">${c.icon} <strong>${c.name}</strong> ku convenient-ana payment plan select pannunga.</p>
+
+      <div class="fee-summary">
+        <div class="left">
+          <div class="lbl">Total Course Fee</div>
+          <div class="amt"><span class="strike">Rs. ${c.total.toLocaleString()}</span></div>
+        </div>
+        <div class="badge">🎁 OFFER PRICE NOW — SAVE UP TO Rs. ${(c.total-c.today).toLocaleString()}</div>
+      </div>
+
+      <div class="plan-grid">
+        <div class="plan-card ${state.plan==='full'?'selected':''}" onclick="selectPlan('full')">
+          <div class="check"></div>
+          <span class="tag tag-best">BEST VALUE</span>
+          <h4>Full Payment</h4>
+          <div class="price">Rs. ${c.full.toLocaleString()}</div>
+          <p>One-time payment, discounted price. No installments needed.</p>
+          <div class="save">Save Rs. ${(c.total-c.full).toLocaleString()}</div>
+        </div>
+        <div class="plan-card ${state.plan==='today'?'selected':''}" onclick="selectPlan('today')">
+          <div class="check"></div>
+          <span class="tag tag-hot">TODAY ONLY</span>
+          <h4>Pay Today & Save More</h4>
+          <div class="price">Rs. ${c.today.toLocaleString()}</div>
+          <p>Secure your seat today — lowest price, valid only if paid now.</p>
+          <div class="save">Save Rs. ${(c.total-c.today).toLocaleString()}</div>
+          <div class="countdown">⏰ Offer ends in <span id="todayCountdown">${formatCountdown()}</span></div>
+        </div>
+        <div class="plan-card ${state.plan==='installment'?'selected':''}" onclick="selectPlan('installment')">
+          <div class="check"></div>
+          <span class="tag tag-flex">FLEXIBLE</span>
+          <h4>Installment Plan</h4>
+          <div class="price">Rs. ${c.inst1.toLocaleString()} <small>+ Rs. ${c.inst2.toLocaleString()} later</small></div>
+          <p>1st Payment (Enroll Now): Rs. ${c.inst1.toLocaleString()}<br>2nd Payment (Before 8th session): Rs. ${c.inst2.toLocaleString()}</p>
+          <div class="save">Installment Total: Rs. ${(c.inst1+c.inst2).toLocaleString()}</div>
+        </div>
+      </div>
+
+      <div class="offers-title">🎯 Exclusive Bonus Offers ${state.plan==='today' ? '(not available on "Pay Today" plan)' : '(optional — tick to apply)'}</div>
+      <div class="offer-grid">
+        <label class="offer-card ${state.offerRefer?'on':''}" style="${state.plan==='today'?'opacity:.5;cursor:not-allowed;':''}">
+          <input type="checkbox" ${state.plan==='today'?'disabled':''} ${state.offerRefer?'checked':''} onchange="toggleOffer('refer', this.checked)">
+          <div class="txt">
+            <h5>👥 Refer & Earn</h5>
+            <p>Refer a friend who enrolls correctly. Only for the person who referred — you pay just <span class="off">Rs. ${referAmt.toLocaleString()}</span> total${state.plan==='installment' ? ' (installment overridden into one flat payment)' : ` (Save Rs. ${(c.total-referAmt).toLocaleString()})`}.</p>
+          </div>
+        </label>
+        <label class="offer-card ${state.offerSocial?'on':''}" style="${state.plan==='today'?'opacity:.5;cursor:not-allowed;':''}">
+          <input type="checkbox" ${state.plan==='today'?'disabled':''} ${state.offerSocial?'checked':''} onchange="toggleOffer('social', this.checked)">
+          <div class="txt">
+            <h5>📣 Social Media Offer</h5>
+            <p>Post the course on social media, tag us & get <span class="off">Rs. 800 OFF</span> ${state.plan==='installment' ? 'your 2nd installment' : 'your payment'} instantly. Not valid on "Pay Today" plan.</p>
+          </div>
+        </label>
+      </div>
+
+      <div class="amount-box">
+        <div><div class="lbl">${a.label}</div><div class="val">Rs. ${a.due.toLocaleString()}</div></div>
+        <div class="note" style="max-width:280px;text-align:right;">${a.note}</div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="goBack()">← Back</button>
+        <button class="btn btn-primary" onclick="goNext()">Next →</button>
+      </div>
+    `;
+    countdownTimer = setInterval(()=>{
+      const el = document.getElementById('todayCountdown');
+      if(el) el.textContent = formatCountdown(); else { clearInterval(countdownTimer); countdownTimer=null; }
+    }, 1000);
+  }
+
+  else if(state.step === 3){
+    p.innerHTML = `
+      <h3>Step 3 — Upload Payment Screenshot</h3>
+      <p class="sub">Payment complete pannitu, athoda screenshot (JPG / PNG / PDF, max 5MB) upload pannunga.</p>
+      <div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+        <div class="icon">☁️⬆️</div>
+        <h4>Click or drag & drop to upload</h4>
+        <p>JPG, PNG or PDF · Max 5MB</p>
+      </div>
+      <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" onchange="handleFile(event)">
+      ${state.file ? `
+        <div class="file-chip">
+          ${state.filePreview ? `<img src="${state.filePreview}" alt="preview">` : `<span style="font-size:20px;">📄</span>`}
+          <span class="fname">${state.file}</span>
+          <span class="x" onclick="removeFile(event)">✕</span>
+        </div>
+        <div class="uploaded-note">✅ File uploaded successfully!</div>
+      ` : ''}
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="goBack()">← Back</button>
+        <button class="btn btn-primary" onclick="goNext()" ${state.file?'':'disabled'}>Next →</button>
+      </div>
+    `;
+    const dz = document.getElementById('dropZone');
+    dz.addEventListener('dragover', e=>{ e.preventDefault(); dz.classList.add('drag'); });
+    dz.addEventListener('dragleave', ()=> dz.classList.remove('drag'));
+    dz.addEventListener('drop', e=>{
+      e.preventDefault(); dz.classList.remove('drag');
+      if(e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]);
+    });
+  }
+
+  else if(state.step === 4){
+    const d = state.data;
+    const c = getCourse();
+    const a = calcAmount();
+    d.amount = a.due;
+    p.innerHTML = `
+      <h3>Step 4 — Fill Registration Form</h3>
+      <p class="sub">Required details ellam correct-a fill pannunga (* mandatory).</p>
+      <div class="form-grid">
+        <div class="selected-course-chip">
+          <span>${c.icon} <strong>${c.name}</strong> — Rs. ${d.amount.toLocaleString()}</span>
+          <span class="edit" onclick="state.step=1;renderPanel();">Change course</span>
+        </div>
+        <div class="field" id="f_fullName">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" placeholder="e.g. Fahim Ahamed" value="${d.fullName}" oninput="upd('fullName',this.value)">
+          <small class="err">Full name required</small>
+        </div>
+        <div class="field" id="f_email">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" placeholder="you@example.com" value="${d.email}" oninput="upd('email',this.value)">
+          <small class="err">Valid email required</small>
+        </div>
+        <div class="field" id="f_mobile">
+          <label>Mobile Number <span class="req">*</span></label>
+          <input type="text" placeholder="07XXXXXXXX" value="${d.mobile}" oninput="upd('mobile',this.value)">
+          <small class="err">Valid mobile number required</small>
+        </div>
+        <div class="field" id="f_nic">
+          <label>NIC / Passport Number <span class="req">*</span></label>
+          <input type="text" placeholder="e.g. 200012345678 or N1234567" value="${d.nic}" oninput="upd('nic',this.value)">
+          <small class="err">NIC / Passport number required</small>
+        </div>
+        <div class="field full" id="f_address">
+          <label>Address <span class="req">*</span></label>
+          <input type="text" placeholder="e.g. No. 45, Galle Road, Kalutara" value="${d.address}" oninput="upd('address',this.value)">
+          <small class="err">Address required</small>
+        </div>
+        <div class="field" id="f_amount">
+          <label>Amount Payable (Rs.)</label>
+          <input type="text" value="${d.amount.toLocaleString()}" readonly style="background:#F5F6FB;color:var(--sf-muted);">
+        </div>
+        <div class="field" id="f_whatsapp">
+          <label>WhatsApp Number <span class="req">*</span></label>
+          <input type="text" placeholder="07XXXXXXXX" value="${d.whatsapp}" oninput="upd('whatsapp',this.value)">
+          <small class="err">Valid WhatsApp number required</small>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="goBack()">← Back</button>
+        <button class="btn btn-primary" onclick="validateForm()">Next →</button>
+      </div>
+    `;
+  }
+
+  else if(state.step === 5){
+    const d = state.data;
+    const c = getCourse();
+    const planLabel = state.plan==='full' ? 'Full Payment (Discounted)' : state.plan==='today' ? 'Pay Today & Save More' : 'Installment Plan (1st of 2)';
+    p.innerHTML = `
+      <h3>Step 5 — Review & Submit</h3>
+      <p class="sub">Details ellam correct-a irukka double-check pannitu Submit pannunga.</p>
+      <ul class="review-list">
+        <li><span class="k">Full Name</span>${d.fullName}</li>
+        <li><span class="k">Email</span>${d.email}</li>
+        <li><span class="k">Mobile</span>${d.mobile}</li>
+        <li><span class="k">NIC / Passport</span>${d.nic}</li>
+        <li><span class="k">Course</span>${c.icon} ${c.name}</li>
+        <li><span class="k">Address</span>${d.address}</li>
+        <li><span class="k">Amount Payable</span>Rs. ${d.amount.toLocaleString()}</li>
+        <li><span class="k">WhatsApp</span>${d.whatsapp}</li>
+        <li><span class="k">Payment Screenshot</span>${state.file}</li>
+        <li><span class="k">Payment Plan</span>${planLabel}</li>
+      </ul>
+      <ul class="checklist">
+        <li>All details checked</li>
+        <li>Screenshot clear & readable</li>
+        <li>Amount matches selected plan</li>
+        <li>Address correct</li>
+        <li>Two-step verification done</li>
+      </ul>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick="goBack()">← Back</button>
+        <button class="btn btn-primary" onclick="submitForm()">Submit ✓</button>
+      </div>
+    `;
+  }
+
+  else if(state.step === 6){
+    const c = getCourse();
+    const refId = state.refId;
+    p.innerHTML = `
+      <div class="success-wrap">
+        <div class="success-circle">✓</div>
+        <h3>Registration Successful!</h3>
+        <p>Thank you, ${state.data.fullName}! Ungal registration for <strong>${c.name}</strong> confirm aayiduchu. Confirmation email / SMS & WhatsApp message via shortly varum.</p>
+        <div class="ref-box">
+          <div><div class="lbl">Reference ID</div><div class="val">${refId}</div></div>
+          <button class="copy-btn" id="copyBtn" onclick="copyRef('${refId}')">📋 Copy ID</button>
+        </div>
+        <div class="success-actions">
+          <button class="btn btn-wa" onclick="shareWhatsApp()">💬 Send to WhatsApp</button>
+          <button class="btn btn-outline" onclick="downloadReceipt()">⬇️ Download Receipt</button>
+          <button class="btn btn-primary" onclick="resetForm()">Go to Dashboard</button>
+        </div>
+      </div>
+    `;
+    fireConfetti();
+  }
+
+  renderStepper();
+}
+
+function selectCourse(id){ state.courseId = id; renderPanel(); }
+
+function selectPlan(plan){
+  state.plan = plan;
+  if(plan === 'today'){ state.offerRefer = false; state.offerSocial = false; }
+  renderPanel();
+}
+
+function toggleOffer(type, checked){
+  if(type === 'refer'){ state.offerRefer = checked; if(checked) state.offerSocial = false; }
+  else { state.offerSocial = checked; if(checked) state.offerRefer = false; }
+  renderPanel();
+}
+
+function processFile(file){
+  if(file.size > 5*1024*1024){ alert('File 5MB-kku mela irukku. Sirusa file podunga.'); return; }
+  state.file = file.name;
+  if(file.type.startsWith('image/')){
+    const reader = new FileReader();
+    reader.onload = e => { state.filePreview = e.target.result; renderPanel(); };
+    reader.readAsDataURL(file);
+  } else {
+    state.filePreview = null;
+    renderPanel();
+  }
+}
+function handleFile(e){ const file = e.target.files[0]; if(file) processFile(file); }
+function removeFile(e){ e.stopPropagation(); state.file = null; state.filePreview = null; renderPanel(); }
+
+function upd(key,val){ state.data[key] = val; }
+
+function validateForm(){
+  clearErrs();
+  const d = state.data;
+  let ok = true;
+  if(!d.fullName || d.fullName.trim().length < 2){ fieldErr('fullName'); ok=false; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)){ fieldErr('email'); ok=false; }
+  if(!/^0\d{9}$/.test(d.mobile.replace(/\s/g,''))){ fieldErr('mobile'); ok=false; }
+  if(!d.nic || d.nic.trim().length < 5){ fieldErr('nic'); ok=false; }
+  if(!d.address || d.address.trim().length < 5){ fieldErr('address'); ok=false; }
+  if(!/^0\d{9}$/.test(d.whatsapp.replace(/\s/g,''))){ fieldErr('whatsapp'); ok=false; }
+  if(!ok){ renderPanel(); return; }
+  goNext();
+}
+
+function goNext(){ state.step++; renderPanel(); window.scrollTo({top:0,behavior:'smooth'}); }
+function goBack(){ state.step--; renderPanel(); window.scrollTo({top:0,behavior:'smooth'}); }
+
+function submitForm(){
+  state.refId = 'SFDS-' + Math.floor(100000 + Math.random()*900000);
+  sendToBackend();
+  state.step = 6;
+  renderPanel();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function sendToBackend(){
+  if(!CONFIG.googleScriptURL) return;
+  const c = getCourse();
+  const payload = { refId: state.refId, ...state.data, course: c.name, plan: state.plan, screenshot: state.file, timestamp: new Date().toISOString() };
+  try{
+    fetch(CONFIG.googleScriptURL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) }).catch(()=>{});
+  }catch(e){}
+}
+
+function shareWhatsApp(){
+  const d = state.data, c = getCourse();
+  const msg = encodeURIComponent(
+    `New Registration — SF Digital Solutions LK\n\n` +
+    `Ref ID: ${state.refId}\nName: ${d.fullName}\nCourse: ${c.name}\nAmount: Rs. ${d.amount.toLocaleString()}\nMobile: ${d.mobile}\nNIC/Passport: ${d.nic}\nWhatsApp: ${d.whatsapp}\nAddress: ${d.address}`
+  );
+  window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${msg}`, '_blank');
+}
+
+function downloadReceipt(){
+  const d = state.data, c = getCourse();
+  const planLabel = state.plan==='full' ? 'Full Payment (Discounted)' : state.plan==='today' ? 'Pay Today & Save More' : 'Installment Plan (1st of 2)';
+  const text =
+`SF DIGITAL SOLUTIONS LK — REGISTRATION RECEIPT
+================================================
+Reference ID   : ${state.refId}
+Date           : ${new Date().toLocaleString()}
+------------------------------------------------
+Full Name      : ${d.fullName}
+Email          : ${d.email}
+Mobile         : ${d.mobile}
+NIC / Passport : ${d.nic}
+WhatsApp       : ${d.whatsapp}
+Address        : ${d.address}
+------------------------------------------------
+Course         : ${c.name}
+Payment Plan   : ${planLabel}
+Amount Paid    : Rs. ${d.amount.toLocaleString()}
+Screenshot     : ${state.file}
+================================================
+Thank you for registering with SF Digital Solutions LK!
+You will be contacted soon via WhatsApp / Email.
+`;
+  const blob = new Blob([text], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${state.refId}-receipt.txt`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+function copyRef(id){
+  navigator.clipboard.writeText(id).then(()=>{
+    const btn = document.getElementById('copyBtn');
+    if(btn){ btn.textContent = '✓ Copied!'; setTimeout(()=>{ btn.textContent = '📋 Copy ID'; }, 1500); }
+  });
+}
+
+function fireConfetti(){
+  const colors = ['#1E5CFF','#8B2FD6','#17A673','#F5811F','#E5484D'];
+  for(let i=0;i<50;i++){
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.left = Math.random()*100 + 'vw';
+    el.style.background = colors[Math.floor(Math.random()*colors.length)];
+    el.style.animationDuration = (2.2 + Math.random()*1.6) + 's';
+    el.style.animationDelay = (Math.random()*0.4) + 's';
+    document.body.appendChild(el);
+    setTimeout(()=> el.remove(), 4200);
+  }
+}
+
+function resetForm(){
+  state.step = 1; state.courseId = null; state.plan = 'full';
+  state.offerSocial = false; state.offerRefer = false;
+  state.file = null; state.filePreview = null; state.refId = null;
+  state.data = {fullName:'',email:'',mobile:'',nic:'',address:'',amount:0,whatsapp:''};
+  renderPanel();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+renderPanel();
+</script>
+</body>
+</html>
