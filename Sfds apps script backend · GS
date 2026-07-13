@@ -1,0 +1,102 @@
+/**
+ * SF Digital Solutions LK — Course Registration Backend
+ * ---------------------------------------------------------------
+ * SETUP (one time, ~5 minutes):
+ * 1. Go to https://sheets.google.com and create a new blank spreadsheet.
+ *    Name it something like "SFDS Course Registrations".
+ * 2. In the sheet, go to Extensions > Apps Script.
+ * 3. Delete any placeholder code in the editor and paste this entire file in.
+ * 4. Click Deploy > New deployment.
+ *    - Click the gear icon next to "Select type" and choose "Web app".
+ *    - Description: anything (e.g. "SFDS registration receiver").
+ *    - Execute as: Me.
+ *    - Who has access: Anyone.
+ *    - Click Deploy, then Authorize access (it's your own script, so approve it).
+ * 5. Copy the "Web app URL" it gives you (ends in /exec).
+ * 6. Paste that URL into CONFIG.googleScriptURL near the top of the
+ *    course-registration.html <script> tag.
+ * That's it — every submitted registration will now appear as a new row
+ * in this spreadsheet, with a link to the payment screenshot in Drive.
+ * ---------------------------------------------------------------
+ * If you ever change the form fields, update the HEADERS array below
+ * and the sheet.appendRow(...) call to match.
+ */
+
+const SCREENSHOT_FOLDER_NAME = 'SFDS Payment Screenshots';
+
+const HEADERS = [
+  'Timestamp', 'Reference ID', 'Full Name', 'Email', 'Mobile',
+  'NIC / Passport', 'WhatsApp', 'Address', 'Course', 'Plan',
+  'Amount (Rs.)', 'Payment Screenshot'
+];
+
+function doPost(e) {
+  try {
+    const data = JSON.parse(e.postData.contents);
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(HEADERS);
+      sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
+    }
+
+    const screenshotLink = saveScreenshotToDrive(data);
+
+    sheet.appendRow([
+      new Date(),
+      data.refId || '',
+      data.fullName || '',
+      data.email || '',
+      data.mobile || '',
+      data.nic || '',
+      data.whatsapp || '',
+      data.address || '',
+      data.course || '',
+      data.plan || '',
+      data.amount || '',
+      screenshotLink
+    ]);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'success' }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+/**
+ * Decodes the base64 screenshot sent from the form and saves it into a
+ * Drive folder, returning a shareable link. Falls back to just the
+ * filename if no base64 data was sent (e.g. CONFIG wasn't updated yet).
+ */
+function saveScreenshotToDrive(data) {
+  if (!data.screenshotBase64) {
+    return data.screenshotFileName || '(no screenshot received)';
+  }
+  const match = data.screenshotBase64.match(/^data:(.+);base64,(.*)$/);
+  if (!match) return data.screenshotFileName || '(unrecognized file data)';
+
+  const contentType = match[1];
+  const base64 = match[2];
+  const folder = getOrCreateFolder(SCREENSHOT_FOLDER_NAME);
+  const fileName = (data.refId || 'unknown') + '_' + (data.screenshotFileName || 'screenshot');
+  const blob = Utilities.newBlob(Utilities.base64Decode(base64), contentType, fileName);
+  const file = folder.createFile(blob);
+
+  // Anyone with the link can view — needed so you can click straight from
+  // the sheet without re-requesting access each time. The link itself is
+  // not guessable/public, but avoid posting the sheet or folder publicly
+  // since screenshots may contain bank details.
+  file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+  return file.getUrl();
+}
+
+function getOrCreateFolder(name) {
+  const existing = DriveApp.getFoldersByName(name);
+  if (existing.hasNext()) return existing.next();
+  return DriveApp.createFolder(name);
+}
