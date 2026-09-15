@@ -37,7 +37,7 @@
     padding:32px 16px 60px;
     overflow-x:hidden;
   }
-  .wrap{max-width:920px;margin:0 auto;position:relative;}
+  .wrap{max-width:960px;margin:0 auto;position:relative;}
 
   /* Header */
   .brandbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:24px;flex-wrap:wrap;}
@@ -64,12 +64,16 @@
   .social-proof .avatars span:first-child{margin-left:0;}
 
   .hero{
-    background:linear-gradient(120deg,var(--sf-navy) 0%, var(--sf-navy-2) 55%, #2a1861 100%);
-    border-radius:20px;padding:26px 26px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden;
+    background:linear-gradient(120deg,#EEF3FF 0%, #F6F0FF 55%, #FDF6FF 100%);
+    border:1px solid #E1E6FA;
+    border-radius:20px;padding:28px 28px;color:var(--sf-navy);margin-bottom:20px;position:relative;overflow:hidden;
+    box-shadow:var(--shadow);
   }
-  .hero::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(139,47,214,0.55),transparent 70%);}
-  .hero h2{font-family:'Sora',sans-serif;font-size:22px;margin:0 0 6px;position:relative;}
-  .hero p{margin:0;color:#C7CCEE;font-size:13.5px;position:relative;max-width:560px;}
+  .hero::after{content:"";position:absolute;right:-50px;top:-50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(139,47,214,0.12),transparent 70%);}
+  .hero::before{content:"";position:absolute;left:-30px;bottom:-60px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(30,92,255,0.10),transparent 70%);}
+  .hero-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #E1E6FA;border-radius:999px;padding:5px 12px;font-size:11px;font-weight:700;color:var(--sf-purple);margin-bottom:10px;position:relative;box-shadow:0 3px 10px rgba(139,47,214,0.10);}
+  .hero h2{font-family:'Sora',sans-serif;font-size:23px;margin:0 0 6px;position:relative;color:var(--sf-navy);}
+  .hero p{margin:0;color:var(--sf-muted);font-size:13.5px;position:relative;max-width:580px;line-height:1.55;}
 
   /* Mode switcher */
   .mode-switch{display:flex;gap:6px;background:#fff;border:1px solid var(--sf-line);border-radius:14px;padding:6px;margin-bottom:20px;box-shadow:var(--shadow);}
@@ -101,27 +105,32 @@
   .panel h3{font-family:'Sora',sans-serif;font-size:17px;margin:0 0 4px;color:var(--sf-navy);}
   .panel .sub{color:var(--sf-muted);font-size:13px;margin:0 0 20px;}
 
-  /* Course cards */
-  .course-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  /* Course cards (image banner + body) */
+  .course-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   @media(max-width:640px){.course-grid{grid-template-columns:1fr;}}
   .course-card{
-    border:1.5px solid var(--sf-line);border-radius:14px;padding:16px;cursor:pointer;
-    transition:all .18s ease;position:relative;display:flex;gap:12px;align-items:flex-start;
+    border:1.5px solid var(--sf-line);border-radius:14px;cursor:pointer;
+    transition:all .18s ease;position:relative;display:flex;flex-direction:column;
+    overflow:hidden;background:#fff;
   }
-  .course-card:hover{border-color:var(--sf-blue);transform:translateY(-2px);}
-  .course-card.selected{border-color:var(--sf-purple);background:linear-gradient(180deg,rgba(139,47,214,0.05),rgba(30,92,255,0.03));}
-  .course-card .cicon{
-    width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));
-    display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+  .course-card:hover{border-color:var(--sf-blue);transform:translateY(-3px);box-shadow:0 12px 24px rgba(20,26,51,0.10);}
+  .course-card.selected{border-color:var(--sf-purple);box-shadow:0 12px 24px rgba(139,47,214,0.14);}
+  .course-art{
+    height:92px;position:relative;overflow:hidden;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
   }
-  .course-card h4{margin:0 0 4px;font-size:13.5px;font-family:'Sora',sans-serif;}
-  .course-card .cdesc{margin:0 0 8px;font-size:11px;color:var(--sf-muted);line-height:1.5;}
-  .course-card .cfee{font-size:12px;color:var(--sf-muted);}
+  .course-art::after{content:"";position:absolute;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,0.14);right:-35px;top:-45px;}
+  .course-art::before{content:"";position:absolute;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.10);left:-22px;bottom:-34px;}
+  .course-art svg{width:38px;height:38px;position:relative;z-index:1;}
+  .course-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1;}
+  .course-card h4{margin:0;font-size:13.5px;font-family:'Sora',sans-serif;color:var(--sf-navy);}
+  .course-card .cdesc{margin:0;font-size:11px;color:var(--sf-muted);line-height:1.5;}
+  .course-card .cfee{font-size:12px;color:var(--sf-muted);margin-top:2px;}
   .course-card .cfee .strike{text-decoration:line-through;color:#9096b8;margin-right:6px;}
   .course-card .cfee .now{color:var(--sf-green);font-weight:700;}
-  .course-card .check{position:absolute;top:12px;right:12px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--sf-line);background:#fff;}
+  .course-card .check{position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.7);background:rgba(255,255,255,0.22);backdrop-filter:blur(2px);z-index:2;}
   .course-card.selected .check{background:var(--sf-purple);border-color:var(--sf-purple);}
-  .course-card.selected .check::after{content:"✓";color:#fff;font-size:11px;display:block;text-align:center;line-height:17px;}
+  .course-card.selected .check::after{content:"✓";color:#fff;font-size:11px;display:block;text-align:center;line-height:18px;}
 
   /* Fee summary bar */
   .fee-summary{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:linear-gradient(120deg,#FFF7ED,#FFF1E6);border:1px solid #FBDCC0;border-radius:14px;padding:14px 18px;margin-bottom:20px;}
@@ -131,26 +140,24 @@
   .fee-summary .badge{background:var(--sf-red);color:#fff;font-size:11px;font-weight:700;padding:6px 12px;border-radius:999px;letter-spacing:.2px;white-space:nowrap;}
 
   /* Payment plan cards */
-  .plan-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
-  @media(max-width:700px){.plan-grid{grid-template-columns:1fr;}}
-  .plan-card{border:1.5px solid var(--sf-line);border-radius:14px;padding:18px;cursor:pointer;transition:all .2s ease;position:relative;}
+  .plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:560px){.plan-grid{grid-template-columns:1fr;}}
+  .plan-card{border:1.5px solid var(--sf-line);border-radius:14px;padding:20px;cursor:pointer;transition:all .2s ease;position:relative;}
   .plan-card:hover{border-color:var(--sf-blue);}
   .plan-card.selected{border-color:var(--sf-purple);background:linear-gradient(180deg,rgba(139,47,214,0.05),rgba(30,92,255,0.03));}
-  .plan-card .check{position:absolute;top:14px;right:14px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--sf-line);background:#fff;}
+  .plan-card .check{position:absolute;top:16px;right:16px;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--sf-line);background:#fff;}
   .plan-card.selected .check{background:var(--sf-purple);border-color:var(--sf-purple);}
   .plan-card.selected .check::after{content:"✓";color:#fff;font-size:11px;display:block;text-align:center;line-height:17px;}
   .plan-card .tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;margin-bottom:10px;letter-spacing:.2px;}
   .tag-best{background:#E7F8F1;color:var(--sf-green);}
-  .tag-hot{background:#FDEAEA;color:var(--sf-red);}
   .tag-flex{background:#EDF1FF;color:var(--sf-blue);}
-  .plan-card h4{margin:0 0 6px;font-size:14.5px;font-family:'Sora',sans-serif;}
-  .plan-card .price{font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:var(--sf-navy);}
+  .plan-card h4{margin:0 0 6px;font-size:15px;font-family:'Sora',sans-serif;}
+  .plan-card .price{font-family:'Sora',sans-serif;font-size:22px;font-weight:800;color:var(--sf-navy);}
   .plan-card .price small{font-size:11px;font-weight:600;color:var(--sf-muted);}
   .plan-card p{margin:8px 0 0;font-size:11.5px;color:var(--sf-muted);line-height:1.5;}
   .plan-card .save{color:var(--sf-green);font-size:11.5px;font-weight:700;margin-top:6px;}
-  .countdown{margin-top:8px;font-size:11px;font-weight:700;color:var(--sf-red);display:flex;align-items:center;gap:5px;}
 
-  /* Installment timeline (beautified) */
+  /* Installment timeline */
   .inst-timeline{display:flex;align-items:flex-start;margin-top:14px;}
   .inst-node{display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:74px;}
   .inst-node .circle{
@@ -176,11 +183,11 @@
   .offer-card .txt p{margin:0;font-size:11px;color:var(--sf-muted);line-height:1.4;}
   .offer-card .txt .off{color:var(--sf-green);font-weight:700;}
 
-  .amount-box{margin-top:20px;background:var(--sf-navy);border-radius:14px;padding:18px 20px;color:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;position:relative;overflow:hidden;}
-  .amount-box::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(139,47,214,0.5),transparent 70%);}
-  .amount-box .lbl{font-size:11.5px;color:#B7BEE8;}
-  .amount-box .val{font-family:'Sora',sans-serif;font-size:24px;font-weight:800;}
-  .amount-box .note{font-size:11px;color:#9AA3D6;margin-top:3px;}
+  .amount-box{margin-top:20px;background:linear-gradient(120deg,#EEF3FF,#F6F0FF);border:1.5px solid #DCE3FA;border-radius:14px;padding:18px 20px;color:var(--sf-navy);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;position:relative;overflow:hidden;}
+  .amount-box::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(139,47,214,0.10),transparent 70%);}
+  .amount-box .lbl{font-size:11.5px;color:var(--sf-muted);}
+  .amount-box .val{font-family:'Sora',sans-serif;font-size:24px;font-weight:800;color:var(--sf-navy);}
+  .amount-box .note{font-size:11px;color:var(--sf-muted);margin-top:3px;}
 
   /* Upload */
   .upload-zone{border:2px dashed var(--sf-line);border-radius:14px;padding:34px 20px;text-align:center;cursor:pointer;transition:all .2s;}
@@ -246,7 +253,7 @@
   .btn-ghost:hover{border-color:var(--sf-blue);}
   .btn:disabled{opacity:.5;cursor:not-allowed;}
 
-  /* 2nd installment banner note */
+  /* Info note */
   .info-note{display:flex;gap:10px;align-items:flex-start;background:#EEF3FF;border:1px solid #D7E1FF;border-radius:12px;padding:12px 14px;font-size:12px;color:var(--sf-navy);margin-bottom:20px;line-height:1.5;}
   .info-note .ic{font-size:16px;flex-shrink:0;}
 
@@ -279,6 +286,7 @@
   </div>
 
   <div class="hero" id="heroBox">
+    <div class="hero-chip">✨ Advanced Registration System</div>
     <h2 id="heroTitle">Course Registration</h2>
     <p id="heroDesc">Course select pannunga, payment plan choose pannunga, screenshot upload panni submit pannunga. Confirmation WhatsApp & Email மூலமா instant-a varum.</p>
   </div>
@@ -305,15 +313,37 @@ const CONFIG = {
   googleScriptURL: 'https://script.google.com/macros/s/AKfycbztQFLciKIkeHq2L333JnRmTwSJIH_aMJ0Z_5s2J1kTX6mOnGUtZHMSuJ89ns5pAiow/exec'              // Google Apps Script Web App URL paste pannunga auto-save to Google Sheets-ku (optional, free)
 };
 
+/* Inline line-art icons per course — no external image hosting needed, always renders crisp */
+const ICONS = {
+  monitor: '<svg viewBox="0 0 48 48" fill="none"><rect x="6" y="8" width="36" height="24" rx="3" stroke="white" stroke-width="2.5"/><path d="M18 40h12M24 32v8" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="20" r="4" stroke="white" stroke-width="2"/></svg>',
+  cap: '<svg viewBox="0 0 48 48" fill="none"><path d="M24 10 4 18l20 8 20-8-20-8Z" stroke="white" stroke-width="2.5" stroke-linejoin="round"/><path d="M14 22v8c0 3 4.5 6 10 6s10-3 10-6v-8" stroke="white" stroke-width="2.5"/><path d="M40 18v10" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>',
+  robot: '<svg viewBox="0 0 48 48" fill="none"><rect x="12" y="16" width="24" height="18" rx="4" stroke="white" stroke-width="2.5"/><circle cx="19" cy="25" r="2.4" fill="white"/><circle cx="29" cy="25" r="2.4" fill="white"/><path d="M24 16v-6M18 10h12" stroke="white" stroke-width="2.5" stroke-linecap="round"/><path d="M8 24h4M36 24h4" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>',
+  megaphone: '<svg viewBox="0 0 48 48" fill="none"><path d="M8 20v8l8 2V18l-8 2Z" stroke="white" stroke-width="2.5" stroke-linejoin="round"/><path d="M16 18l18-8v28l-18-8" stroke="white" stroke-width="2.5" stroke-linejoin="round"/><path d="M13 30l2 8" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>',
+  play: '<svg viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="36" height="24" rx="4" stroke="white" stroke-width="2.5"/><path d="M20 18l10 6-10 6V18Z" fill="white"/></svg>',
+  heart: '<svg viewBox="0 0 48 48" fill="none"><rect x="9" y="10" width="30" height="22" rx="4" stroke="white" stroke-width="2.5"/><path d="M24 27c-4-3-7-5.3-7-8.4 0-2 1.6-3.6 3.6-3.6 1.3 0 2.6.7 3.4 1.9.8-1.2 2.1-1.9 3.4-1.9 2 0 3.6 1.6 3.6 3.6 0 3.1-3 5.4-7 8.4Z" fill="white"/></svg>',
+  chat: '<svg viewBox="0 0 48 48" fill="none"><path d="M8 14h22a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H18l-6 6v-6H8a4 4 0 0 1-4-4v-8a4 4 0 0 1 4-4Z" stroke="white" stroke-width="2.5" stroke-linejoin="round"/><path d="M30 22h10a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4h-2v4l-5-4" stroke="white" stroke-width="2" stroke-linejoin="round" opacity="0.8"/></svg>'
+};
+
 const COURSES = [
-  {id:'compbasics',name:'Professional Computer Basics Course',              icon:'🖥️', total:8800, full:4800, today:4000, inst1:3500, inst2:3000, desc:'Keyboard & mouse handling, Windows basics, MS Word/Excel intro, internet, email & WhatsApp usage — perfect starting point for absolute beginners.'},
-  {id:'crypto',   name:'Diploma in IT', icon:'📈', total:25000, full:18000, today:16000, inst1:10000, inst2:10000, desc:'Complete Diploma covering Computer Fundamentals, MS Office, Internet, Graphic Design, Web Basics and Practical IT Skills.'},
-  {id:'ai',       name:'AI Tools for Business',        icon:'🤖', total:6800, full:3800, today:3200, inst1:2200, inst2:1600, desc:'Learn ChatGPT, Canva AI, AI automation, content creation and productivity tools for business and office work.'},
-  {id:'marketing',name:'Digital Marketing Mastery',    icon:'📱', total:35000, full:22000, today:20000, inst1:15000, inst2:10000, desc:'Master Facebook, Instagram, Google and YouTube advertising, SEO, Content Marketing, Audience Targeting, Campaign Creation, Lead Generation, Social Media Strategy and Ad Performance Optimization.'},
-  {id:'msoffice', name:'AI Videos Making',        icon:'💻', total:9000, full:5500, today:4800, inst1:3500, inst2:3000, desc:'Create professional AI videos using modern AI tools, voice generation, avatars and automated video editing.'},
-  {id:'design',   name:'Facebook & Instagram Ads Campaign',    icon:'🎨', total:10000, full:8500, today:7800, inst1:6000, inst2:5000, desc:'Create, manage and optimize Facebook & Instagram advertising campaigns to reach more customers.'},
-  {id:'korean',   name:'Spoken Sinhala',   icon:'🇰🇷', total:9500, full:8000, today:7500, inst1:4500, inst2:4000, desc:'Learn Sinhala speaking, daily conversations, pronunciation and practical communication for beginners.'},
+  {id:'compbasics',name:'Professional Computer Basics Course',              icon:'monitor',    gradA:'#1E5CFF', gradB:'#0B1A45', total:8800,  full:5600, inst1:4000, inst2:2600, desc:'Keyboard & mouse handling, Windows basics, MS Word/Excel intro, internet, email & WhatsApp usage — perfect starting point for absolute beginners.'},
+  {id:'crypto',   name:'Diploma in IT',                                     icon:'cap',        gradA:'#8B2FD6', gradB:'#1E5CFF', total:29000, full:28000,inst1:19000,inst2:10000, refer:4600, desc:'Complete Diploma covering Computer Fundamentals, MS Office, Internet, Graphic Design, Web Basics and Practical IT Skills.'},
+  {id:'ai',       name:'AI Tools for Business',                             icon:'robot',      gradA:'#17A673', gradB:'#1E5CFF', total:6800,  full:3800, inst1:2200, inst2:1600, desc:'Learn ChatGPT, Canva AI, AI automation, content creation and productivity tools for business and office work.'},
+  {id:'marketing',name:'Digital Marketing Mastery',                         icon:'megaphone',  gradA:'#F5811F', gradB:'#E5484D', total:35000, full:22000,inst1:15000,inst2:10000,desc:'Master Facebook, Instagram, Google and YouTube advertising, SEO, Content Marketing, Audience Targeting, Campaign Creation, Lead Generation, Social Media Strategy and Ad Performance Optimization.'},
+  {id:'msoffice', name:'AI Videos Making',                                  icon:'play',       gradA:'#B23FE0', gradB:'#8B2FD6', total:9000,  full:5500, inst1:3500, inst2:3000, desc:'Create professional AI videos using modern AI tools, voice generation, avatars and automated video editing.'},
+  {id:'design',   name:'Facebook & Instagram Ads Campaign',                 icon:'heart',      gradA:'#E5484D', gradB:'#8B2FD6', total:10000, full:8500, inst1:6000, inst2:5000, desc:'Create, manage and optimize Facebook & Instagram advertising campaigns to reach more customers.'},
+  {id:'korean',   name:'Spoken Sinhala',                                    icon:'chat',       gradA:'#1E5CFF', gradB:'#B23FE0', total:9500,  full:8000, inst1:4500, inst2:4000, desc:'Learn Sinhala speaking, daily conversations, pronunciation and practical communication for beginners.'},
 ];
+
+function courseArt(c){
+  return `<div class="course-art" style="background:linear-gradient(135deg, ${c.gradA}, ${c.gradB});">${ICONS[c.icon]}</div>`;
+}
+function courseCard(c, selected, clickFn, bodyHTML){
+  return `<div class="course-card ${selected?'selected':''}" onclick="${clickFn}">
+    <div class="check"></div>
+    ${courseArt(c)}
+    <div class="course-body">${bodyHTML}</div>
+  </div>`;
+}
 
 const state = {
   mode: 'register', // 'register' | 'installment2'
@@ -357,8 +387,6 @@ const i2Steps = [
   {id:4, label:"Done"}
 ];
 
-let countdownTimer = null;
-
 function getCourse(){ return COURSES.find(c=>c.id===state.courseId) || null; }
 function getI2Course(){ return COURSES.find(c=>c.id===state.i2CourseId) || null; }
 
@@ -397,17 +425,14 @@ function renderStepper(){
 function fieldErr(id){ const f = document.getElementById('f_'+id); if(f) f.classList.add('invalid'); }
 function clearErrs(){ document.querySelectorAll('.field').forEach(f=>f.classList.remove('invalid')); }
 
-function referPrice(full){ return Math.round((full*0.625)/100)*100; }
+function referPrice(c){ return c.refer != null ? c.refer : Math.round((c.full*0.625)/100)*100; }
 
 function calcAmount(){
   const c = getCourse();
   if(!c) return {due:0,label:'Amount Payable',note:''};
-  if(state.plan === 'today'){
-    return {due: c.today, label:'Amount Payable', note:'Limited-time today-only price — bonus offers not applicable on this plan'};
-  }
   if(state.plan === 'installment'){
     if(state.offerRefer){
-      const rp = referPrice(c.full);
+      const rp = referPrice(c);
       return {due: rp, label:'Amount Payable (Refer & Earn)', note:`Refer & Earn applied — flat Rs. ${rp.toLocaleString()} total, installment overridden into a single payment`};
     }
     let second = c.inst2;
@@ -422,7 +447,7 @@ function calcAmount(){
   let base = c.full;
   let note = 'Full payment — one time, no installments';
   if(state.offerRefer){
-    base = referPrice(c.full);
+    base = referPrice(c);
     note = 'Refer & Earn applied — final price for the person who referred';
   } else if(state.offerSocial){
     base = Math.max(c.full - 800, 0);
@@ -431,20 +456,7 @@ function calcAmount(){
   return {due: base, label:'Amount Payable', note};
 }
 
-function pad(n){ return n.toString().padStart(2,'0'); }
-function formatCountdown(){
-  const now = new Date();
-  const midnight = new Date(now);
-  midnight.setHours(24,0,0,0);
-  const diff = midnight - now;
-  const h = Math.floor(diff/3600000);
-  const m = Math.floor((diff%3600000)/60000);
-  const s = Math.floor((diff%60000)/1000);
-  return `${pad(h)}:${pad(m)}:${pad(s)}`;
-}
-
 function renderPanel(){
-  if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null; }
   const p = document.getElementById('panel');
 
   if(state.mode === 'installment2'){ renderInstallment2Panel(p); renderStepper(); return; }
@@ -454,17 +466,11 @@ function renderPanel(){
       <h3>Step 1 — Select Your Course</h3>
       <p class="sub">Padikanum-nu ninaikura course-a select pannunga — fee details kaanpikkum.</p>
       <div class="course-grid">
-        ${COURSES.map(c=>`
-          <div class="course-card ${state.courseId===c.id?'selected':''}" onclick="selectCourse('${c.id}')">
-            <div class="check"></div>
-            <div class="cicon">${c.icon}</div>
-            <div>
+        ${COURSES.map(c=>courseCard(c, state.courseId===c.id, `selectCourse('${c.id}')`, `
               <h4>${c.name}</h4>
               <p class="cdesc">${c.desc}</p>
-              <div class="cfee"><span class="strike">Rs. ${c.total.toLocaleString()}</span><span class="now">From Rs. ${c.today.toLocaleString()}</span></div>
-            </div>
-          </div>
-        `).join('')}
+              <div class="cfee"><span class="strike">Rs. ${c.total.toLocaleString()}</span><span class="now">From Rs. ${c.full.toLocaleString()}</span></div>
+        `)).join('')}
       </div>
       <div class="actions">
         <div></div>
@@ -476,17 +482,17 @@ function renderPanel(){
   else if(state.step === 2){
     const c = getCourse();
     const a = calcAmount();
-    const referAmt = referPrice(c.full);
+    const referAmt = referPrice(c);
     p.innerHTML = `
       <h3>Step 2 — Choose Payment Plan</h3>
-      <p class="sub">${c.icon} <strong>${c.name}</strong> ku convenient-ana payment plan select pannunga.</p>
+      <p class="sub">${c.name} ku convenient-ana payment plan select pannunga.</p>
 
       <div class="fee-summary">
         <div class="left">
           <div class="lbl">Total Course Fee</div>
           <div class="amt"><span class="strike">Rs. ${c.total.toLocaleString()}</span></div>
         </div>
-        <div class="badge">🎁 OFFER PRICE NOW — SAVE UP TO Rs. ${(c.total-c.today).toLocaleString()}</div>
+        <div class="badge">🎁 OFFER PRICE NOW — SAVE UP TO Rs. ${(c.total-c.full).toLocaleString()}</div>
       </div>
 
       <div class="plan-grid">
@@ -497,15 +503,6 @@ function renderPanel(){
           <div class="price">Rs. ${c.full.toLocaleString()}</div>
           <p>One-time payment, discounted price. No installments needed.</p>
           <div class="save">Save Rs. ${(c.total-c.full).toLocaleString()}</div>
-        </div>
-        <div class="plan-card ${state.plan==='today'?'selected':''}" onclick="selectPlan('today')">
-          <div class="check"></div>
-          <span class="tag tag-hot">TODAY ONLY</span>
-          <h4>Pay Today & Save More</h4>
-          <div class="price">Rs. ${c.today.toLocaleString()}</div>
-          <p>Secure your seat today — lowest price, valid only if paid now.</p>
-          <div class="save">Save Rs. ${(c.total-c.today).toLocaleString()}</div>
-          <div class="countdown">⏰ Offer ends in <span id="todayCountdown">${formatCountdown()}</span></div>
         </div>
         <div class="plan-card ${state.plan==='installment'?'selected':''}" onclick="selectPlan('installment')">
           <div class="check"></div>
@@ -529,20 +526,20 @@ function renderPanel(){
         </div>
       </div>
 
-      <div class="offers-title">🎯 Exclusive Bonus Offers ${state.plan==='today' ? '(not available on "Pay Today" plan)' : '(optional — tick to apply)'}</div>
+      <div class="offers-title">🎯 Exclusive Bonus Offers (optional — tick to apply)</div>
       <div class="offer-grid">
-        <label class="offer-card ${state.offerRefer?'on':''}" style="${state.plan==='today'?'opacity:.5;cursor:not-allowed;':''}">
-          <input type="checkbox" ${state.plan==='today'?'disabled':''} ${state.offerRefer?'checked':''} onchange="toggleOffer('refer', this.checked)">
+        <label class="offer-card ${state.offerRefer?'on':''}">
+          <input type="checkbox" ${state.offerRefer?'checked':''} onchange="toggleOffer('refer', this.checked)">
           <div class="txt">
             <h5>👥 Refer & Earn</h5>
             <p>Refer a friend who enrolls correctly. Only for the person who referred — you pay just <span class="off">Rs. ${referAmt.toLocaleString()}</span> total${state.plan==='installment' ? ' (installment overridden into one flat payment)' : ` (Save Rs. ${(c.total-referAmt).toLocaleString()})`}.</p>
           </div>
         </label>
-        <label class="offer-card ${state.offerSocial?'on':''}" style="${state.plan==='today'?'opacity:.5;cursor:not-allowed;':''}">
-          <input type="checkbox" ${state.plan==='today'?'disabled':''} ${state.offerSocial?'checked':''} onchange="toggleOffer('social', this.checked)">
+        <label class="offer-card ${state.offerSocial?'on':''}">
+          <input type="checkbox" ${state.offerSocial?'checked':''} onchange="toggleOffer('social', this.checked)">
           <div class="txt">
             <h5>📣 Social Media Offer</h5>
-            <p>Post the course on social media, tag us & get <span class="off">Rs. 800 OFF</span> ${state.plan==='installment' ? 'your 2nd installment' : 'your payment'} instantly. Not valid on "Pay Today" plan.</p>
+            <p>Post the course on social media, tag us & get <span class="off">Rs. 800 OFF</span> ${state.plan==='installment' ? 'your 2nd installment' : 'your payment'} instantly.</p>
           </div>
         </label>
       </div>
@@ -557,10 +554,6 @@ function renderPanel(){
         <button class="btn btn-primary" onclick="goNext()">Next →</button>
       </div>
     `;
-    countdownTimer = setInterval(()=>{
-      const el = document.getElementById('todayCountdown');
-      if(el) el.textContent = formatCountdown(); else { clearInterval(countdownTimer); countdownTimer=null; }
-    }, 1000);
   }
 
   else if(state.step === 3){
@@ -605,7 +598,7 @@ function renderPanel(){
       <p class="sub">Required details ellam correct-a fill pannunga (* mandatory).</p>
       <div class="form-grid">
         <div class="selected-course-chip">
-          <span>${c.icon} <strong>${c.name}</strong> — Rs. ${d.amount.toLocaleString()}</span>
+          <span><strong>${c.name}</strong> — Rs. ${d.amount.toLocaleString()}</span>
           <span class="edit" onclick="state.step=1;renderPanel();">Change course</span>
         </div>
         <div class="field" id="f_fullName">
@@ -653,7 +646,7 @@ function renderPanel(){
   else if(state.step === 5){
     const d = state.data;
     const c = getCourse();
-    const planLabel = state.plan==='full' ? 'Full Payment (Discounted)' : state.plan==='today' ? 'Pay Today & Save More' : 'Installment Plan (1st of 2)';
+    const planLabel = state.plan==='full' ? 'Full Payment (Discounted)' : 'Installment Plan (1st of 2)';
     p.innerHTML = `
       <h3>Step 5 — Review & Submit</h3>
       <p class="sub">Details ellam correct-a irukka double-check pannitu Submit pannunga.</p>
@@ -662,7 +655,7 @@ function renderPanel(){
         <li><span class="k">Email</span>${d.email}</li>
         <li><span class="k">Mobile</span>${d.mobile}</li>
         <li><span class="k">NIC / Passport</span>${d.nic}</li>
-        <li><span class="k">Course</span>${c.icon} ${c.name}</li>
+        <li><span class="k">Course</span>${c.name}</li>
         <li><span class="k">Address</span>${d.address}</li>
         <li><span class="k">Amount Payable</span>Rs. ${d.amount.toLocaleString()}</li>
         <li><span class="k">WhatsApp</span>${d.whatsapp}</li>
@@ -718,16 +711,10 @@ function renderInstallment2Panel(p){
       <p class="sub">Ungal course select pannunga, first registration-la kudutha Reference ID and details fill pannunga.</p>
       <div class="info-note"><span class="ic">ℹ️</span><span>Reference ID ungal 1st installment submit panna appo kedaicha "SFDS-XXXXXX" code. Athu ungakitta illainaa, WhatsApp mூlama SF Digital Solutions LK team-a contact pannunga.</span></div>
       <div class="course-grid">
-        ${COURSES.map(c=>`
-          <div class="course-card ${state.i2CourseId===c.id?'selected':''}" onclick="selectI2Course('${c.id}')">
-            <div class="check"></div>
-            <div class="cicon">${c.icon}</div>
-            <div>
+        ${COURSES.map(c=>courseCard(c, state.i2CourseId===c.id, `selectI2Course('${c.id}')`, `
               <h4>${c.name}</h4>
               <p class="cdesc">2nd Installment Amount: <strong style="color:var(--sf-navy);">Rs. ${c.inst2.toLocaleString()}</strong></p>
-            </div>
-          </div>
-        `).join('')}
+        `)).join('')}
       </div>
       <div class="form-grid" style="margin-top:20px;">
         <div class="field" id="f_i2ref">
@@ -815,7 +802,7 @@ function renderInstallment2Panel(p){
       <ul class="review-list">
         <li><span class="k">Original Reference ID</span>${state.i2OriginalRefId}</li>
         <li><span class="k">Full Name</span>${state.i2FullName}</li>
-        <li><span class="k">Course</span>${c.icon} ${c.name}</li>
+        <li><span class="k">Course</span>${c.name}</li>
         <li><span class="k">Mobile</span>${state.i2Mobile}</li>
         <li><span class="k">WhatsApp</span>${state.i2WhatsApp}</li>
         <li><span class="k">2nd Installment Amount</span>Rs. ${i2Amount().toLocaleString()}</li>
@@ -938,7 +925,6 @@ function selectCourse(id){ state.courseId = id; renderPanel(); }
 
 function selectPlan(plan){
   state.plan = plan;
-  if(plan === 'today'){ state.offerRefer = false; state.offerSocial = false; }
   renderPanel();
 }
 
@@ -1015,7 +1001,7 @@ function shareWhatsApp(){
 
 function downloadReceipt(){
   const d = state.data, c = getCourse();
-  const planLabel = state.plan==='full' ? 'Full Payment (Discounted)' : state.plan==='today' ? 'Pay Today & Save More' : 'Installment Plan (1st of 2)';
+  const planLabel = state.plan==='full' ? 'Full Payment (Discounted)' : 'Installment Plan (1st of 2)';
   const text =
 `SF DIGITAL SOLUTIONS LK — REGISTRATION RECEIPT
 ================================================
