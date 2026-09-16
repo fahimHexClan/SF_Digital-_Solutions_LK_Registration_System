@@ -10,9 +10,9 @@
   :root{
     --sf-navy:#0B1A45;
     --sf-navy-2:#13245e;
-    --sf-blue:#1E5CFF;
-    --sf-purple:#8B2FD6;
-    --sf-purple-2:#B23FE0;
+    --sf-blue:#3E63E0;
+    --sf-purple:#7C4DDB;
+    --sf-purple-2:#9B5FE0;
     --sf-bg:#F5F6FB;
     --sf-panel:#FFFFFF;
     --sf-line:#E4E7F2;
@@ -21,6 +21,10 @@
     --sf-green:#17A673;
     --sf-red:#E5484D;
     --sf-orange:#F5811F;
+    --sf-coral:#FF6B6B;
+    --sf-yellow:#FFC93C;
+    --sf-teal:#2EC4B6;
+    --sf-cream:#FFF6EC;
     --radius:16px;
     --shadow:0 10px 30px rgba(20,26,51,0.08);
   }
@@ -28,29 +32,46 @@
   html,body{margin:0;padding:0;}
   body{
     font-family:'Inter',sans-serif;
-    background:
-      radial-gradient(1200px 500px at 100% -10%, rgba(139,47,214,0.12), transparent 60%),
-      radial-gradient(900px 500px at -10% 0%, rgba(30,92,255,0.10), transparent 55%),
-      var(--sf-bg);
     color:var(--sf-text);
     min-height:100vh;
-    padding:32px 16px 60px;
-    overflow-x:hidden;
+    background:var(--sf-bg);
+    display:flex;
+    flex-wrap:wrap;
   }
-  .wrap{max-width:960px;margin:0 auto;position:relative;}
 
-  /* Header */
-  .brandbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:24px;flex-wrap:wrap;}
-  .brandbar .left{display:flex;align-items:center;gap:14px;}
+  /* Left illustration panel */
+  .illus-panel{
+    flex:0 0 38%;
+    min-width:320px;
+    min-height:100vh;
+    position:sticky;top:0;align-self:flex-start;
+    background:
+      radial-gradient(420px 320px at 85% 10%, rgba(46,196,182,0.14), transparent 60%),
+      radial-gradient(360px 300px at 10% 90%, rgba(255,107,107,0.12), transparent 60%),
+      var(--sf-cream);
+    padding:44px 40px;display:flex;flex-direction:column;justify-content:center;
+    border-right:1px solid #F0E4D3;
+  }
+  .illus-badge{display:flex;align-items:center;gap:12px;position:absolute;top:36px;left:40px;}
+  .illus-art{width:100%;max-width:340px;margin:0 auto;}
+  .illus-art svg{width:100%;height:auto;display:block;}
+  .illus-caption{margin-top:22px;text-align:center;}
+  .illus-caption h3{font-family:'Sora',sans-serif;font-size:19px;margin:0 0 8px;color:var(--sf-navy);}
+  .illus-caption p{margin:0;font-size:12.5px;color:var(--sf-muted);line-height:1.6;max-width:300px;margin:0 auto;}
+
+  /* Right content column */
+  .content-col{flex:1 1 60%;min-width:0;padding:40px 16px 60px;}
+  .wrap{max-width:720px;margin:0 auto;position:relative;}
+
   .brandmark{
-    width:48px;height:48px;border-radius:12px;
+    width:44px;height:44px;border-radius:12px;
     background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));
     display:flex;align-items:center;justify-content:center;
-    font-family:'Sora',sans-serif;font-weight:800;color:white;font-size:18px;
+    font-family:'Sora',sans-serif;font-weight:800;color:white;font-size:16px;
     box-shadow:var(--shadow);flex-shrink:0;
   }
-  .brandtext h1{font-family:'Sora',sans-serif;font-size:19px;margin:0;letter-spacing:0.2px;color:var(--sf-navy);}
-  .brandtext p{margin:2px 0 0;font-size:12.5px;color:var(--sf-muted);}
+  .brandtext h1{font-family:'Sora',sans-serif;font-size:16px;margin:0;letter-spacing:0.2px;color:var(--sf-navy);}
+  .brandtext p{margin:2px 0 0;font-size:11.5px;color:var(--sf-muted);}
   .social-proof{
     display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--sf-line);
     border-radius:999px;padding:7px 14px;font-size:11.5px;color:var(--sf-navy);font-weight:600;
@@ -63,23 +84,24 @@
   }
   .social-proof .avatars span:first-child{margin-left:0;}
 
-  .hero{
-    background:linear-gradient(120deg,#EEF3FF 0%, #F6F0FF 55%, #FDF6FF 100%);
-    border:1px solid #E1E6FA;
-    border-radius:20px;padding:28px 28px;color:var(--sf-navy);margin-bottom:20px;position:relative;overflow:hidden;
-    box-shadow:var(--shadow);
+  .page-head{margin-bottom:20px;}
+  .page-head .row{display:flex;justify-content:flex-end;margin-bottom:14px;}
+  .page-title{font-family:'Sora',sans-serif;font-size:27px;margin:0 0 8px;color:var(--sf-navy);}
+  .page-desc{margin:0;color:var(--sf-muted);font-size:13.5px;max-width:540px;line-height:1.6;}
+
+  @media(max-width:900px){
+    body{flex-direction:column;}
+    .illus-panel{position:relative;min-height:0;width:100%;flex:0 0 auto;padding:70px 24px 26px;border-right:none;border-bottom:1px solid #F0E4D3;}
+    .illus-art{max-width:170px;}
+    .illus-caption{display:none;}
+    .content-col{padding:28px 16px 60px;}
   }
-  .hero::after{content:"";position:absolute;right:-50px;top:-50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(139,47,214,0.12),transparent 70%);}
-  .hero::before{content:"";position:absolute;left:-30px;bottom:-60px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(30,92,255,0.10),transparent 70%);}
-  .hero-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #E1E6FA;border-radius:999px;padding:5px 12px;font-size:11px;font-weight:700;color:var(--sf-purple);margin-bottom:10px;position:relative;box-shadow:0 3px 10px rgba(139,47,214,0.10);}
-  .hero h2{font-family:'Sora',sans-serif;font-size:23px;margin:0 0 6px;position:relative;color:var(--sf-navy);}
-  .hero p{margin:0;color:var(--sf-muted);font-size:13.5px;position:relative;max-width:580px;line-height:1.55;}
 
   /* Mode switcher */
   .mode-switch{display:flex;gap:6px;background:#fff;border:1px solid var(--sf-line);border-radius:14px;padding:6px;margin-bottom:20px;box-shadow:var(--shadow);}
   .mode-btn{flex:1;text-align:center;padding:11px 14px;border-radius:10px;font-size:12.5px;font-weight:700;color:var(--sf-muted);cursor:pointer;transition:all .2s ease;border:none;background:transparent;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;}
   .mode-btn:hover{color:var(--sf-navy);}
-  .mode-btn.active{background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));color:#fff;box-shadow:0 4px 14px rgba(139,47,214,0.28);}
+  .mode-btn.active{background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));color:#fff;box-shadow:0 4px 14px rgba(124,77,219,0.20);}
   .mode-btn.active:hover{color:#fff;}
 
   /* Stepper */
@@ -94,7 +116,7 @@
     font-size:12px;color:var(--sf-muted);transition:all .25s ease;
   }
   .step .label{margin-top:7px;font-size:9.5px;color:var(--sf-muted);text-align:center;font-weight:600;letter-spacing:.2px;max-width:68px;line-height:1.25;}
-  .step.active .dot{background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));border-color:transparent;color:#fff;box-shadow:0 4px 14px rgba(139,47,214,0.35);transform:scale(1.08);}
+  .step.active .dot{background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));border-color:transparent;color:#fff;box-shadow:0 4px 14px rgba(124,77,219,0.24);transform:scale(1.08);}
   .step.active .label{color:var(--sf-navy);}
   .step.done .dot{background:var(--sf-green);border-color:transparent;color:#fff;}
   .step.done .dot::after{content:"✓";}
@@ -116,19 +138,20 @@
   .course-card:hover{border-color:var(--sf-blue);transform:translateY(-3px);box-shadow:0 12px 24px rgba(20,26,51,0.10);}
   .course-card.selected{border-color:var(--sf-purple);box-shadow:0 12px 24px rgba(139,47,214,0.14);}
   .course-art{
-    height:92px;position:relative;overflow:hidden;flex-shrink:0;
+    height:110px;position:relative;overflow:hidden;flex-shrink:0;
     display:flex;align-items:center;justify-content:center;
   }
-  .course-art::after{content:"";position:absolute;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,0.14);right:-35px;top:-45px;}
-  .course-art::before{content:"";position:absolute;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.10);left:-22px;bottom:-34px;}
-  .course-art svg{width:38px;height:38px;position:relative;z-index:1;}
+  .course-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;}
+  .course-art::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(11,26,69,0.08), rgba(11,26,69,0.35));z-index:2;pointer-events:none;}
+  .course-avatar-fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:1;}
+  .course-avatar-fallback svg{width:70px;height:70px;}
   .course-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1;}
   .course-card h4{margin:0;font-size:13.5px;font-family:'Sora',sans-serif;color:var(--sf-navy);}
   .course-card .cdesc{margin:0;font-size:11px;color:var(--sf-muted);line-height:1.5;}
   .course-card .cfee{font-size:12px;color:var(--sf-muted);margin-top:2px;}
   .course-card .cfee .strike{text-decoration:line-through;color:#9096b8;margin-right:6px;}
   .course-card .cfee .now{color:var(--sf-green);font-weight:700;}
-  .course-card .check{position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.7);background:rgba(255,255,255,0.22);backdrop-filter:blur(2px);z-index:2;}
+  .course-card .check{position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.7);background:rgba(255,255,255,0.22);backdrop-filter:blur(2px);z-index:3;}
   .course-card.selected .check{background:var(--sf-purple);border-color:var(--sf-purple);}
   .course-card.selected .check::after{content:"✓";color:#fff;font-size:11px;display:block;text-align:center;line-height:18px;}
 
@@ -163,7 +186,7 @@
   .inst-node .circle{
     width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));
     color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:700;
-    font-size:11.5px;flex-shrink:0;box-shadow:0 3px 8px rgba(139,47,214,0.3);
+    font-size:11.5px;flex-shrink:0;box-shadow:0 3px 8px rgba(124,77,219,0.22);
   }
   .inst-node.pending .circle{background:#EDF0FB;color:var(--sf-muted);box-shadow:none;}
   .inst-node .amt{font-family:'Sora',sans-serif;font-size:12.5px;font-weight:800;color:var(--sf-navy);}
@@ -214,6 +237,9 @@
   .field small.err{color:var(--sf-red);font-size:11px;display:none;}
   .field.invalid input, .field.invalid select{border-color:var(--sf-red);}
   .field.invalid small.err{display:block;}
+  .input-wrap{position:relative;}
+  .input-wrap svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:16px;height:16px;pointer-events:none;}
+  .input-wrap input{padding-left:38px;width:100%;}
   .selected-course-chip{display:flex;align-items:center;justify-content:space-between;background:#F1F4FF;border:1px solid var(--sf-line);border-radius:10px;padding:12px 14px;font-size:13px;grid-column:1/-1;}
   .selected-course-chip .edit{color:var(--sf-blue);font-size:12px;font-weight:600;cursor:pointer;}
 
@@ -247,8 +273,8 @@
   .actions{display:flex;justify-content:space-between;margin-top:26px;gap:12px;}
   .btn{border:none;border-radius:10px;padding:12px 22px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .12s, box-shadow .12s;}
   .btn:active{transform:scale(0.97);}
-  .btn-primary{background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));color:#fff;box-shadow:0 6px 18px rgba(139,47,214,0.28);}
-  .btn-primary:hover{box-shadow:0 8px 22px rgba(139,47,214,0.38);}
+  .btn-primary{background:linear-gradient(135deg,var(--sf-blue),var(--sf-purple));color:#fff;box-shadow:0 5px 14px rgba(124,77,219,0.20);}
+  .btn-primary:hover{box-shadow:0 6px 16px rgba(124,77,219,0.26);}
   .btn-ghost{background:#fff;border:1.5px solid var(--sf-line);color:var(--sf-navy);}
   .btn-ghost:hover{border-color:var(--sf-blue);}
   .btn:disabled{opacity:.5;cursor:not-allowed;}
@@ -269,26 +295,65 @@
 </style>
 </head>
 <body>
-<div class="wrap">
-
-  <div class="brandbar">
-    <div class="left">
-      <div class="brandmark">SF</div>
-      <div class="brandtext">
-        <h1>SF Digital Solutions LK</h1>
-        <p>Web Design • Software • Digital Marketing • Classes & Training</p>
-      </div>
-    </div>
-    <div class="social-proof">
-      <div class="avatars"><span></span><span></span><span></span></div>
-      <span>128+ people enrolled this week</span>
+<div class="illus-panel">
+  <div class="illus-badge">
+    <div class="brandmark">SF</div>
+    <div class="brandtext">
+      <h1>SF Digital Solutions LK</h1>
+      <p>Web Design • Software • Marketing • Training</p>
     </div>
   </div>
 
-  <div class="hero" id="heroBox">
-    <div class="hero-chip">✨ Advanced Registration System</div>
-    <h2 id="heroTitle">Course Registration</h2>
-    <p id="heroDesc">Course select pannunga, payment plan choose pannunga, screenshot upload panni submit pannunga. Confirmation WhatsApp & Email மூலமா instant-a varum.</p>
+  <div class="illus-art">
+    <svg viewBox="0 0 420 520" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="335" cy="95" r="85" fill="#2EC4B6" opacity="0.92"/>
+      <circle cx="345" cy="405" r="46" fill="none" stroke="#FFC93C" stroke-width="22"/>
+      <polygon points="35,475 115,475 75,395" fill="#FF6B6B"/>
+      <circle cx="55" cy="120" r="7" fill="#FFC93C"/>
+      <circle cx="90" cy="90" r="4" fill="#FF6B6B"/>
+      <path d="M20 260q3-18 3-36M32 258q2-16 2-32M44 256q1-14 1-28" stroke="#0B1A45" stroke-width="2" stroke-linecap="round" opacity="0.35" fill="none"/>
+      <path d="M355 470q3-14 3-28M368 468q2-12 2-24" stroke="#0B1A45" stroke-width="2" stroke-linecap="round" opacity="0.3" fill="none"/>
+
+      <rect x="150" y="118" width="118" height="300" rx="18" fill="#FFFFFF" stroke="#0B1A45" stroke-width="3"/>
+      <text x="209" y="280" font-family="Sora, sans-serif" font-size="34" font-weight="800" fill="#8B2FD6" text-anchor="middle">&lt;/&gt;</text>
+
+      <g>
+        <ellipse cx="255" cy="440" rx="46" ry="9" fill="#0B1A45" opacity="0.08"/>
+        <path d="M228 300c-6 26-8 60-4 92 1 12 34 12 36 0 4-30 2-64-4-92Z" fill="#1E5CFF"/>
+        <circle cx="248" cy="270" r="26" fill="#F4C99C"/>
+        <path d="M222 262a26 26 0 0 1 52 0c-6-4-14-6-26-6s-20 2-26 6Z" fill="#0B1A45"/>
+        <rect x="236" y="246" width="24" height="8" rx="2" fill="#0B1A45"/>
+        <path d="M204 330c10-14 20-22 30-26" stroke="#1E5CFF" stroke-width="10" stroke-linecap="round" fill="none"/>
+        <rect x="188" y="312" width="26" height="30" rx="4" fill="#FF6B6B"/>
+      </g>
+
+      <g>
+        <path d="M96 210c0-16 14-28 32-28h6c18 0 32 12 32 28s-14 28-32 28c-4 0-8-1-11-2l-14 10 3-14c-15-5-16-14-16-22Z" fill="#FFE1E1"/>
+        <circle cx="118" cy="210" r="3.5" fill="#FF6B6B"/>
+        <circle cx="130" cy="210" r="3.5" fill="#FF6B6B"/>
+        <circle cx="142" cy="210" r="3.5" fill="#FF6B6B"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="illus-caption">
+    <h3>Learn skills that move your career forward</h3>
+    <p>Hands-on classes in IT, AI tools, design and digital marketing — taught by SF Digital Solutions LK.</p>
+  </div>
+</div>
+
+<div class="content-col">
+<div class="wrap">
+
+  <div class="page-head">
+    <div class="row">
+      <div class="social-proof">
+        <div class="avatars"><span></span><span></span><span></span></div>
+        <span>128+ people enrolled this week</span>
+      </div>
+    </div>
+    <h2 id="heroTitle" class="page-title">Course Registration</h2>
+    <p id="heroDesc" class="page-desc">Course select pannunga, payment plan choose pannunga, screenshot upload panni submit pannunga. Confirmation WhatsApp & Email மூலமா instant-a varum.</p>
   </div>
 
   <div class="mode-switch">
@@ -304,6 +369,7 @@
   <div class="panel" id="panel"></div>
 
   <p class="footer-note">🔒 Ungal details securely SF Digital Solutions LK team-kku mattum anupattapadum.</p>
+</div>
 </div>
 
 <script>
@@ -324,18 +390,45 @@ const ICONS = {
   chat: '<svg viewBox="0 0 48 48" fill="none"><path d="M8 14h22a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H18l-6 6v-6H8a4 4 0 0 1-4-4v-8a4 4 0 0 1 4-4Z" stroke="white" stroke-width="2.5" stroke-linejoin="round"/><path d="M30 22h10a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4h-2v4l-5-4" stroke="white" stroke-width="2" stroke-linejoin="round" opacity="0.8"/></svg>'
 };
 
+/* Small icons for form-field prefixes */
+const FIELD_ICONS = {
+  user: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.6" stroke="#6B7196" stroke-width="1.6"/><path d="M5 20c1.4-4 4-6 7-6s5.6 2 7 6" stroke="#6B7196" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  mail: '<svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5.5" width="17" height="13" rx="2" stroke="#6B7196" stroke-width="1.6"/><path d="M4.5 7l7.5 6 7.5-6" stroke="#6B7196" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  phone: '<svg viewBox="0 0 24 24" fill="none"><path d="M5 4h3.2l1.4 4-2 1.6a12 12 0 0 0 6.8 6.8l1.6-2 4 1.4V19a2 2 0 0 1-2.2 2C10.8 20.6 3.4 13.2 3 6.2A2 2 0 0 1 5 4Z" stroke="#6B7196" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+  card: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5.5" width="18" height="13" rx="2" stroke="#6B7196" stroke-width="1.6"/><path d="M3 10h18" stroke="#6B7196" stroke-width="1.6"/><path d="M6.5 14h4" stroke="#6B7196" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  pin: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.3 7-11.5A7 7 0 0 0 5 9.5C5 14.7 12 21 12 21Z" stroke="#6B7196" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.4" stroke="#6B7196" stroke-width="1.6"/></svg>',
+  rupee: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 5h12M6 9h12M6 5c4 0 7 1.3 7 4s-3 4-7 4l8 7" stroke="#6B7196" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  chat2: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1 1 3.6 6.7L4 20l1.2-3.4A7.96 7.96 0 0 1 4 12Z" stroke="#6B7196" stroke-width="1.6" stroke-linejoin="round"/></svg>'
+};
+
 const COURSES = [
-  {id:'compbasics',name:'Professional Computer Basics Course',              icon:'monitor',    gradA:'#1E5CFF', gradB:'#0B1A45', total:8800,  full:5600, inst1:4000, inst2:2600, desc:'Keyboard & mouse handling, Windows basics, MS Word/Excel intro, internet, email & WhatsApp usage — perfect starting point for absolute beginners.'},
-  {id:'crypto',   name:'Diploma in IT',                                     icon:'cap',        gradA:'#8B2FD6', gradB:'#1E5CFF', total:29000, full:28000,inst1:19000,inst2:10000, refer:4600, desc:'Complete Diploma covering Computer Fundamentals, MS Office, Internet, Graphic Design, Web Basics and Practical IT Skills.'},
-  {id:'ai',       name:'AI Tools for Business',                             icon:'robot',      gradA:'#17A673', gradB:'#1E5CFF', total:6800,  full:3800, inst1:2200, inst2:1600, desc:'Learn ChatGPT, Canva AI, AI automation, content creation and productivity tools for business and office work.'},
-  {id:'marketing',name:'Digital Marketing Mastery',                         icon:'megaphone',  gradA:'#F5811F', gradB:'#E5484D', total:35000, full:22000,inst1:15000,inst2:10000,desc:'Master Facebook, Instagram, Google and YouTube advertising, SEO, Content Marketing, Audience Targeting, Campaign Creation, Lead Generation, Social Media Strategy and Ad Performance Optimization.'},
-  {id:'msoffice', name:'AI Videos Making',                                  icon:'play',       gradA:'#B23FE0', gradB:'#8B2FD6', total:9000,  full:5500, inst1:3500, inst2:3000, desc:'Create professional AI videos using modern AI tools, voice generation, avatars and automated video editing.'},
-  {id:'design',   name:'Facebook & Instagram Ads Campaign',                 icon:'heart',      gradA:'#E5484D', gradB:'#8B2FD6', total:10000, full:8500, inst1:6000, inst2:5000, desc:'Create, manage and optimize Facebook & Instagram advertising campaigns to reach more customers.'},
-  {id:'korean',   name:'Spoken Sinhala',                                    icon:'chat',       gradA:'#1E5CFF', gradB:'#B23FE0', total:9500,  full:8000, inst1:4500, inst2:4000, desc:'Learn Sinhala speaking, daily conversations, pronunciation and practical communication for beginners.'},
+  {id:'compbasics',name:'Professional Computer Basics Course',              icon:'monitor',    gradA:'#4C7DDB', gradB:'#2A3F7A', img:'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=500&q=70', total:8800,  full:5600, inst1:4000, inst2:2600, desc:'Keyboard & mouse handling, Windows basics, MS Word/Excel intro, internet, email & WhatsApp usage — perfect starting point for absolute beginners.'},
+  {id:'crypto',   name:'Diploma in IT',                                     icon:'cap',        gradA:'#8A66C9', gradB:'#5C3D96', img:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=500&q=70', total:29000, full:28000,inst1:19000,inst2:10000, refer:4600, desc:'Complete Diploma covering Computer Fundamentals, MS Office, Internet, Graphic Design, Web Basics and Practical IT Skills.'},
+  {id:'ai',       name:'AI Tools for Business',                             icon:'robot',      gradA:'#2FA98F', gradB:'#227A72', img:'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=70', total:6800,  full:3800, inst1:2200, inst2:1600, desc:'Learn ChatGPT, Canva AI, AI automation, content creation and productivity tools for business and office work.'},
+  {id:'marketing',name:'Digital Marketing Mastery',                         icon:'megaphone',  gradA:'#E08A4D', gradB:'#C4653F', img:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=70', total:35000, full:22000,inst1:15000,inst2:10000,desc:'Master Facebook, Instagram, Google and YouTube advertising, SEO, Content Marketing, Audience Targeting, Campaign Creation, Lead Generation, Social Media Strategy and Ad Performance Optimization.'},
+  {id:'msoffice', name:'AI Videos Making',                                  icon:'play',       gradA:'#A165C9', gradB:'#71449E', img:'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=500&q=70', total:9000,  full:5500, inst1:3500, inst2:3000, desc:'Create professional AI videos using modern AI tools, voice generation, avatars and automated video editing.'},
+  {id:'design',   name:'Facebook & Instagram Ads Campaign',                 icon:'heart',      gradA:'#D9647F', gradB:'#B0435F', img:'https://images.unsplash.com/photo-1611162617213-7d7a6832f2ab?auto=format&fit=crop&w=500&q=70', total:10000, full:8500, inst1:6000, inst2:5000, desc:'Create, manage and optimize Facebook & Instagram advertising campaigns to reach more customers.'},
+  {id:'korean',   name:'Spoken Sinhala',                                    icon:'chat',       gradA:'#5A78DB', gradB:'#3E52A8', img:'https://images.unsplash.com/photo-1543269865-cbf427effbac?auto=format&fit=crop&w=500&q=70', total:9500,  full:8000, inst1:4500, inst2:4000, desc:'Learn Sinhala speaking, daily conversations, pronunciation and practical communication for beginners.'},
 ];
 
+/* Illustrated instructor/learner avatars — one per course, varied so the banners feel peopled.
+   Drawn inline (not stock photos) so they always load reliably and carry no licensing risk;
+   if Fahim wants real instructor photos later, just drop the files in and we swap the <img> in. */
+const AVATARS = {
+  compbasics: '<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#fff"/><path d="M8 60c2-14 11-22 24-22s22 8 24 22" fill="#2E3A59"/><circle cx="32" cy="27" r="13" fill="#C68642"/><path d="M19 24a13 13 0 0 1 26 0c-4-5-10-7-13-7s-9 2-13 7Z" fill="#1B1410"/><rect x="21" y="26" width="9" height="6" rx="2" fill="none" stroke="#1B1410" stroke-width="1.6"/><rect x="34" y="26" width="9" height="6" rx="2" fill="none" stroke="#1B1410" stroke-width="1.6"/><path d="M30 29h4" stroke="#1B1410" stroke-width="1.6"/><circle cx="47" cy="47" r="13" fill="#fff" stroke="#E4E7F2" stroke-width="1"/><rect x="40" y="42" width="14" height="9" rx="1.5" fill="none" stroke="#2A3F7A" stroke-width="1.6"/><path d="M45 51h4" stroke="#2A3F7A" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  crypto: '<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#fff"/><path d="M8 60c2-14 11-22 24-22s22 8 24 22" fill="#4A2E7A"/><circle cx="32" cy="28" r="13" fill="#A9673A"/><path d="M17 21 32 15l15 6-15 6-15-6Z" fill="#0B1A45"/><path d="M22 24v6c0 3 4.5 5 10 5s10-2 10-5v-6" fill="none" stroke="#0B1A45" stroke-width="1.6"/><circle cx="47" cy="47" r="13" fill="#fff" stroke="#E4E7F2" stroke-width="1"/><path d="M40 42h14v10a3 3 0 0 1-3 3h-8a3 3 0 0 1-3-3v-10Z" fill="none" stroke="#5C3D96" stroke-width="1.6"/><path d="M43 46h8M43 49h8" stroke="#5C3D96" stroke-width="1.3" stroke-linecap="round"/></svg>',
+  ai: '<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#fff"/><path d="M8 60c2-14 11-22 24-22s22 8 24 22" fill="#0F6B5C"/><circle cx="32" cy="27" r="13" fill="#E0A872"/><path d="M19 24a13 13 0 0 1 26 0" fill="none" stroke="#2B1B12" stroke-width="6" stroke-linecap="round"/><rect x="17" y="24" width="5" height="8" rx="2.5" fill="#2B1B12"/><rect x="42" y="24" width="5" height="8" rx="2.5" fill="#2B1B12"/><circle cx="47" cy="47" r="13" fill="#fff" stroke="#E4E7F2" stroke-width="1"/><rect x="40" y="43" width="14" height="10" rx="2.5" fill="none" stroke="#227A72" stroke-width="1.6"/><circle cx="44.5" cy="48" r="1.3" fill="#227A72"/><circle cx="49.5" cy="48" r="1.3" fill="#227A72"/></svg>',
+  marketing: '<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#fff"/><path d="M8 60c2-14 11-22 24-22s22 8 24 22" fill="#B3502A"/><circle cx="32" cy="27" r="13" fill="#C68642"/><path d="M19 24a13 13 0 0 1 26 0c-3-5-9-8-13-8s-10 3-13 8Z" fill="#241A12"/><circle cx="32" cy="14" r="5" fill="#241A12"/><circle cx="47" cy="47" r="13" fill="#fff" stroke="#E4E7F2" stroke-width="1"/><path d="M40 45v5l4 1v-7l-4 1Z" fill="none" stroke="#C4653F" stroke-width="1.5" stroke-linejoin="round"/><path d="M44 44l9-3.5v13L44 50" fill="none" stroke="#C4653F" stroke-width="1.5" stroke-linejoin="round"/></svg>',
+  msoffice: '<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#fff"/><path d="M8 60c2-14 11-22 24-22s22 8 24 22" fill="#6E2FA3"/><circle cx="32" cy="27" r="13" fill="#A9673A"/><path d="M20 25c1-8 6-12 12-12s11 4 12 12" fill="none" stroke="#1B1410" stroke-width="2"/><path d="M18 38c0-6 3-9 6-9M46 38c0-6-3-9-6-9" stroke="#1B1410" stroke-width="2" fill="none"/><circle cx="18" cy="40" r="3.4" fill="#1B1410"/><circle cx="46" cy="40" r="3.4" fill="#1B1410"/><circle cx="47" cy="47" r="13" fill="#fff" stroke="#E4E7F2" stroke-width="1"/><circle cx="47" cy="47" r="8" fill="none" stroke="#71449E" stroke-width="1.6"/><path d="M45 43.5l6 3.5-6 3.5v-7Z" fill="#71449E"/></svg>',
+  design: '<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#fff"/><path d="M8 60c2-14 11-22 24-22s22 8 24 22" fill="#B23A5C"/><circle cx="32" cy="28" r="13" fill="#D8A468"/><path d="M15 34c0-14 8-24 17-24s17 10 17 24c0 3-3 5-6 3-2-6-5-9-11-9s-9 3-11 9c-3 2-6 0-6-3Z" fill="#7A2A48"/><circle cx="47" cy="47" r="13" fill="#fff" stroke="#E4E7F2" stroke-width="1"/><path d="M47 52c-3-2.2-5.2-4-5.2-6.4 0-1.5 1.2-2.7 2.7-2.7 1 0 1.9.5 2.5 1.4.6-.9 1.5-1.4 2.5-1.4 1.5 0 2.7 1.2 2.7 2.7 0 2.4-2.2 4.2-5.2 6.4Z" fill="#B0435F"/></svg>',
+  korean: '<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#fff"/><path d="M8 60c2-14 11-22 24-22s22 8 24 22" fill="#2545B8"/><path d="M17 42c-1-10 0-24 15-24s16 14 15 24c-2-2-3-6-3-10a12 12 0 0 0-24 0c0 4-1 8-3 10Z" fill="#241A12"/><circle cx="32" cy="27" r="12" fill="#C68642"/><rect x="29" y="42" width="6" height="10" rx="3" fill="#241A12"/><circle cx="47" cy="47" r="13" fill="#fff" stroke="#E4E7F2" stroke-width="1"/><path d="M40.5 46.5a6.5 6.5 0 1 1 3 5.5L40 53l1-3a6.5 6.5 0 0 1-0.5-3.5Z" fill="none" stroke="#3E52A8" stroke-width="1.5" stroke-linejoin="round"/></svg>'
+};
+
 function courseArt(c){
-  return `<div class="course-art" style="background:linear-gradient(135deg, ${c.gradA}, ${c.gradB});">${ICONS[c.icon]}</div>`;
+  return `<div class="course-art" style="background:linear-gradient(135deg, ${c.gradA}, ${c.gradB});">
+    <img class="course-photo" src="${c.img}" alt="${c.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="course-avatar-fallback">${AVATARS[c.id]}</div>
+  </div>`;
 }
 function courseCard(c, selected, clickFn, bodyHTML){
   return `<div class="course-card ${selected?'selected':''}" onclick="${clickFn}">
@@ -344,6 +437,7 @@ function courseCard(c, selected, clickFn, bodyHTML){
     <div class="course-body">${bodyHTML}</div>
   </div>`;
 }
+
 
 const state = {
   mode: 'register', // 'register' | 'installment2'
@@ -603,36 +697,36 @@ function renderPanel(){
         </div>
         <div class="field" id="f_fullName">
           <label>Full Name <span class="req">*</span></label>
-          <input type="text" placeholder="e.g. Fahim Ahamed" value="${d.fullName}" oninput="upd('fullName',this.value)">
+          <div class="input-wrap">${FIELD_ICONS.user}<input type="text" placeholder="e.g. Fahim Ahamed" value="${d.fullName}" oninput="upd('fullName',this.value)"></div>
           <small class="err">Full name required</small>
         </div>
         <div class="field" id="f_email">
           <label>Email Address <span class="req">*</span></label>
-          <input type="email" placeholder="you@example.com" value="${d.email}" oninput="upd('email',this.value)">
+          <div class="input-wrap">${FIELD_ICONS.mail}<input type="email" placeholder="you@example.com" value="${d.email}" oninput="upd('email',this.value)"></div>
           <small class="err">Valid email required</small>
         </div>
         <div class="field" id="f_mobile">
           <label>Mobile Number <span class="req">*</span></label>
-          <input type="text" placeholder="07XXXXXXXX" value="${d.mobile}" oninput="upd('mobile',this.value)">
+          <div class="input-wrap">${FIELD_ICONS.phone}<input type="text" placeholder="07XXXXXXXX" value="${d.mobile}" oninput="upd('mobile',this.value)"></div>
           <small class="err">Valid mobile number required</small>
         </div>
         <div class="field" id="f_nic">
           <label>NIC / Passport Number <span class="req">*</span></label>
-          <input type="text" placeholder="e.g. 200012345678 or N1234567" value="${d.nic}" oninput="upd('nic',this.value)">
+          <div class="input-wrap">${FIELD_ICONS.card}<input type="text" placeholder="e.g. 200012345678 or N1234567" value="${d.nic}" oninput="upd('nic',this.value)"></div>
           <small class="err">NIC / Passport number required</small>
         </div>
         <div class="field full" id="f_address">
           <label>Address <span class="req">*</span></label>
-          <input type="text" placeholder="e.g. No. 45, Galle Road, Kalutara" value="${d.address}" oninput="upd('address',this.value)">
+          <div class="input-wrap">${FIELD_ICONS.pin}<input type="text" placeholder="e.g. No. 45, Galle Road, Kalutara" value="${d.address}" oninput="upd('address',this.value)"></div>
           <small class="err">Address required</small>
         </div>
         <div class="field" id="f_amount">
           <label>Amount Payable (Rs.)</label>
-          <input type="text" value="${d.amount.toLocaleString()}" readonly style="background:#F5F6FB;color:var(--sf-muted);">
+          <div class="input-wrap">${FIELD_ICONS.rupee}<input type="text" value="${d.amount.toLocaleString()}" readonly style="background:#F5F6FB;color:var(--sf-muted);"></div>
         </div>
         <div class="field" id="f_whatsapp">
           <label>WhatsApp Number <span class="req">*</span></label>
-          <input type="text" placeholder="07XXXXXXXX" value="${d.whatsapp}" oninput="upd('whatsapp',this.value)">
+          <div class="input-wrap">${FIELD_ICONS.chat2}<input type="text" placeholder="07XXXXXXXX" value="${d.whatsapp}" oninput="upd('whatsapp',this.value)"></div>
           <small class="err">Valid WhatsApp number required</small>
         </div>
       </div>
@@ -719,22 +813,22 @@ function renderInstallment2Panel(p){
       <div class="form-grid" style="margin-top:20px;">
         <div class="field" id="f_i2ref">
           <label>Original Reference ID <span class="req">*</span></label>
-          <input type="text" placeholder="e.g. SFDS-123456" value="${state.i2OriginalRefId}" oninput="state.i2OriginalRefId=this.value">
+          <div class="input-wrap">${FIELD_ICONS.card}<input type="text" placeholder="e.g. SFDS-123456" value="${state.i2OriginalRefId}" oninput="state.i2OriginalRefId=this.value"></div>
           <small class="err">Original Reference ID required</small>
         </div>
         <div class="field" id="f_i2name">
           <label>Full Name <span class="req">*</span></label>
-          <input type="text" placeholder="e.g. Fahim Ahamed" value="${state.i2FullName}" oninput="state.i2FullName=this.value">
+          <div class="input-wrap">${FIELD_ICONS.user}<input type="text" placeholder="e.g. Fahim Ahamed" value="${state.i2FullName}" oninput="state.i2FullName=this.value"></div>
           <small class="err">Full name required</small>
         </div>
         <div class="field" id="f_i2mobile">
           <label>Mobile Number <span class="req">*</span></label>
-          <input type="text" placeholder="07XXXXXXXX" value="${state.i2Mobile}" oninput="state.i2Mobile=this.value">
+          <div class="input-wrap">${FIELD_ICONS.phone}<input type="text" placeholder="07XXXXXXXX" value="${state.i2Mobile}" oninput="state.i2Mobile=this.value"></div>
           <small class="err">Valid mobile number required</small>
         </div>
         <div class="field" id="f_i2whatsapp">
           <label>WhatsApp Number <span class="req">*</span></label>
-          <input type="text" placeholder="07XXXXXXXX" value="${state.i2WhatsApp}" oninput="state.i2WhatsApp=this.value">
+          <div class="input-wrap">${FIELD_ICONS.chat2}<input type="text" placeholder="07XXXXXXXX" value="${state.i2WhatsApp}" oninput="state.i2WhatsApp=this.value"></div>
           <small class="err">Valid WhatsApp number required</small>
         </div>
       </div>
