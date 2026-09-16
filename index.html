@@ -51,8 +51,9 @@
     border-right:1px solid #F1E6D8;
     padding:40px 36px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
   }
-  .brand-logo{width:100%;max-width:300px;}
-  .brand-logo img{width:100%;height:auto;display:block;filter:drop-shadow(0 12px 28px rgba(11,26,69,.14));}
+  .brand-logo{width:266px;height:266px;border-radius:50%;padding:12px;background:#fff;
+    box-shadow:0 18px 44px rgba(11,26,69,.16), 0 0 0 1px rgba(11,26,69,.05);}
+  .brand-logo img{width:100%;height:100%;display:block;border-radius:50%;object-fit:cover;}
   .brand-copy{margin-top:26px;max-width:320px;}
   .brand-copy h2{font-family:'Sora',sans-serif;font-size:21px;line-height:1.3;margin:0 0 10px;color:var(--navy);font-weight:700;}
   .brand-copy p{margin:0;font-size:13px;color:#6E6152;line-height:1.65;}
@@ -110,8 +111,20 @@
     transition:border-color .18s, box-shadow .18s, transform .18s;}
   .course-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 12px 24px rgba(20,26,51,.1);}
   .course-card[aria-pressed="true"]{border-color:var(--violet);box-shadow:0 12px 26px rgba(124,58,237,.16);}
-  .course-art{display:block;height:112px;position:relative;flex-shrink:0;}
-  .course-art svg{width:100%;height:100%;display:block;}
+  .course-art{display:block;height:124px;position:relative;flex-shrink:0;overflow:hidden;background:#0B1A45;}
+  .course-art .art-svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  .art-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+    transition:transform .5s cubic-bezier(.2,.7,.3,1);}
+  .course-card:hover .art-photo{transform:scale(1.06);}
+  .art-veil{position:absolute;inset:0;z-index:2;pointer-events:none;}
+  .course-art.no-photo .art-veil{display:none;}
+  .art-badge{position:absolute;left:12px;bottom:12px;z-index:3;width:32px;height:32px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;background:rgba(11,26,69,.42);
+    border:1px solid rgba(255,255,255,.34);backdrop-filter:blur(6px);}
+  .art-badge svg{width:17px;height:17px;}
+  .art-level{position:absolute;right:12px;bottom:12px;z-index:3;font-size:10.5px;font-weight:600;color:#fff;
+    background:rgba(11,26,69,.42);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 10px;
+    backdrop-filter:blur(6px);}
   .course-card .check{position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;
     border:1.5px solid rgba(255,255,255,.75);background:rgba(255,255,255,.25);z-index:2;}
   .course-card[aria-pressed="true"] .check{background:#fff;border-color:#fff;}
@@ -210,7 +223,8 @@
   .cover-inner{position:relative;z-index:2;}
   .cover-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
   .cover-brand{display:flex;align-items:center;gap:11px;}
-  .cover-brand img{width:46px;height:46px;border-radius:13px;background:#fff;padding:3px;box-shadow:0 6px 18px rgba(0,0,0,.25);}
+  .cover-brand img{width:48px;height:48px;border-radius:50%;background:#fff;padding:2px;object-fit:cover;
+    box-shadow:0 6px 18px rgba(0,0,0,.28), 0 0 0 1.5px rgba(255,255,255,.35);}
   .cover-brand h1{font-family:'Sora',sans-serif;font-size:15px;margin:0;letter-spacing:.1px;}
   .cover-brand p{margin:2px 0 0;font-size:11px;color:rgba(255,255,255,.72);}
   .cover .enrol-pill{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28);color:#fff;box-shadow:none;backdrop-filter:blur(4px);}
@@ -445,30 +459,33 @@ const CONFIG = {
 
 /* ===========================================================
    COURSES
+   img: banner photo. Ungaloda sontha class photo irundhaa athai
+   podunga (e.g. img:'images/computer-class.jpg') — photo load
+   aagalena, kizhe irukkura drawn artwork automatic-a theriyum.
    total = original price, full = discounted one-time price,
    inst1 = pay now, inst2 = pay before 8th session,
    refer = flat price for the Refer & Earn offer (optional)
    =========================================================== */
 const COURSES = [
-  {id:'compbasics', name:'Professional Computer Basics', art:'monitor', a:'#4C7DDB', b:'#22356B',
+  {id:'compbasics', level:'Beginner · 6 weeks', img:'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=720&h=420&q=72', name:'Professional Computer Basics', art:'monitor', a:'#4C7DDB', b:'#22356B',
    total:8800,  full:5600,  inst1:4000, inst2:2600,
    desc:'Keyboard and mouse handling, Windows, MS Word and Excel intro, internet, email and WhatsApp — the right starting point for complete beginners.'},
-  {id:'diploma',   name:'Diploma in IT', art:'diploma', a:'#8A66C9', b:'#4E2F86',
+  {id:'diploma', level:'Diploma · 6 months', img:'https://images.unsplash.com/photo-1569653402334-2e98fbaa80ee?auto=format&fit=crop&w=720&h=420&q=72',   name:'Diploma in IT', art:'diploma', a:'#8A66C9', b:'#4E2F86',
    total:29000, full:28000, inst1:19000, inst2:10000, refer:4600,
    desc:'Computer fundamentals, MS Office, internet, graphic design, web basics and practical IT skills in one full diploma.'},
-  {id:'ai',        name:'AI Tools for Business', art:'robot', a:'#2FA98F', b:'#18675F',
+  {id:'ai', level:'Beginner · 4 weeks', img:'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=720&h=420&q=72',        name:'AI Tools for Business', art:'robot', a:'#2FA98F', b:'#18675F',
    total:6800,  full:3800,  inst1:2200, inst2:1600,
    desc:'ChatGPT, Canva AI, automation and content creation for everyday office and business work.'},
-  {id:'marketing', name:'Digital Marketing Mastery', art:'megaphone', a:'#E08A4D', b:'#B04F2A',
+  {id:'marketing', level:'Advanced · 3 months', img:'https://images.unsplash.com/photo-1531545514256-b1400bc00f31?auto=format&fit=crop&w=720&h=420&q=72', name:'Digital Marketing Mastery', art:'megaphone', a:'#E08A4D', b:'#B04F2A',
    total:35000, full:22000, inst1:15000, inst2:10000,
    desc:'Facebook, Instagram, Google and YouTube ads, SEO, content, audience targeting, lead generation and campaign optimisation.'},
-  {id:'aivideo',   name:'AI Videos Making', art:'video', a:'#A165C9', b:'#5E3689',
+  {id:'aivideo', level:'Intermediate · 6 weeks', img:'https://images.unsplash.com/photo-1643199187247-b3b6009bf0bb?auto=format&fit=crop&w=720&h=420&q=72',   name:'AI Videos Making', art:'video', a:'#A165C9', b:'#5E3689',
    total:9000,  full:5500,  inst1:3500, inst2:3000,
    desc:'Make professional videos with AI tools — scripts, voice generation, avatars and automated editing.'},
-  {id:'metaads',   name:'Facebook &amp; Instagram Ads', art:'social', a:'#D9647F', b:'#96304C',
+  {id:'metaads', level:'Intermediate · 4 weeks', img:'https://images.unsplash.com/photo-1563461660947-507ef49e9c47?auto=format&fit=crop&w=720&h=420&q=72',   name:'Facebook &amp; Instagram Ads', art:'social', a:'#D9647F', b:'#96304C',
    total:10000, full:8500,  inst1:6000, inst2:5000,
    desc:'Create, manage and optimise Meta ad campaigns — audiences, budgets, creatives and reporting.'},
-  {id:'sinhala',   name:'Spoken Sinhala', art:'speech', a:'#5A78DB', b:'#2F3F8F',
+  {id:'sinhala', level:'Beginner · 8 weeks', img:'https://images.unsplash.com/photo-1565688256340-249dbb31f25d?auto=format&fit=crop&w=720&h=420&q=72',   name:'Spoken Sinhala', art:'speech', a:'#5A78DB', b:'#2F3F8F',
    total:9500,  full:8000,  inst1:4500, inst2:4000,
    desc:'Speak Sinhala with confidence — daily conversation, pronunciation and practical workplace phrases.'}
 ];
@@ -519,7 +536,7 @@ function courseArt(c){
       <path d="M232 76h50a12 12 0 0 1 12 12v22a12 12 0 0 1-12 12h-6v16l-18-16h-26a12 12 0 0 1-12-12V88a12 12 0 0 1 12-12Z" fill="#fff" opacity=".5"/>
       <path d="M252 96h30" stroke="${c.b}" stroke-width="5" stroke-linecap="round" opacity=".55"/>`
   };
-  return `<svg viewBox="0 0 360 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  const svg = `<svg class="art-svg" viewBox="0 0 360 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs><linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="${c.a}"/><stop offset="1" stop-color="${c.b}"/></linearGradient>
       <pattern id="${g}p" width="18" height="18" patternUnits="userSpaceOnUse">
@@ -529,6 +546,31 @@ function courseArt(c){
     <rect width="360" height="150" fill="url(#${g}p)"/>
     ${scenes[c.art] || ''}
   </svg>`;
+
+  // The photo sits on top of the drawn artwork. If the photo is slow or
+  // blocked, onerror hides it and the artwork below stays visible.
+  const photo = c.img
+    ? `<img class="art-photo" src="${c.img}" alt="" loading="lazy" decoding="async"
+         onerror="this.remove();this.closest('.course-art')&&this.closest('.course-art').classList.add('no-photo')">
+       <span class="art-veil" style="background:linear-gradient(200deg, ${c.a}70 0%, rgba(11,26,69,.16) 46%, ${c.b}CC 100%)"></span>`
+    : '';
+  const badge = `<span class="art-badge" aria-hidden="true">${miniIcon(c.art)}</span>`;
+  const level = c.level ? `<span class="art-level">${esc(c.level)}</span>` : '';
+  return svg + photo + badge + level;
+}
+
+/* Small white glyph shown over the photo so each course still reads at a glance. */
+function miniIcon(kind){
+  const k = {
+    monitor:'<rect x="4" y="5" width="16" height="11" rx="2"/><path d="M9 20h6M12 16v4"/>',
+    diploma:'<path d="M12 4 3 8l9 4 9-4-9-4Z"/><path d="M7 10v4c0 1.7 2.2 3 5 3s5-1.3 5-3v-4"/>',
+    robot:'<rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V4M9 13h.01M15 13h.01"/>',
+    megaphone:'<path d="M4 10v4l4 1V9l-4 1Z"/><path d="M8 9l9-4v14l-9-4"/>',
+    video:'<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M10 10l5 2-5 2v-4Z"/>',
+    social:'<rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M12 14c-3-2-4.5-3.4-4.5-5"/>',
+    speech:'<path d="M4 6h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H9l-4 3v-3H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/>'
+  }[kind] || '';
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${k}</svg>`;
 }
 
 const ICON = {
@@ -1167,37 +1209,88 @@ function shareWhatsApp(){
 
 function downloadReceipt(){
   const d = state.data, c = course(), q = quote();
+  const bank = state.bankId ? bankById(state.bankId) : null;
+  const logo = (document.querySelector('.cover-brand img') || {}).src || '';
   const rows = [
-    ['Reference ID', state.refId],
-    ['Date', new Date().toLocaleString('en-LK')],
-    ['Full name', d.fullName],
-    ['Email', d.email],
+    ['Student name', d.fullName],
+    ['NIC / passport', d.nic],
     ['Mobile', d.mobile],
     ['WhatsApp', d.whatsapp],
-    ['NIC / passport', d.nic],
+    ['Email', d.email],
     ['Address', d.address],
-    ['Course', c.name.replace(/&amp;/g,'&')],
+    ['Course', c ? c.name.replace(/&amp;/g,'&') : ''],
     ['Payment plan', state.plan === 'full' ? 'Full payment' : 'Installment 1 of 2'],
-    ['Amount paid now', rs(q.dueNow)],
-    ['Paid to', state.bankId ? bankById(state.bankId).bank + ' · ' + bankById(state.bankId).number : '—'],
-    ['Balance due', q.later > 0 ? rs(q.later) + ' before 8th session' : 'None'],
-    ['Payment slip', state.file ? state.file.name : '—']
+    ['Paid to', bank ? bank.bank + ' — ' + bank.number + ' (' + bank.accountName + ')' : 'Not recorded'],
+    ['Payment slip', state.file ? state.file.name : '—'],
+    ['Issued', new Date().toLocaleString('en-LK')]
   ];
-  const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(state.refId)} receipt</title>
-  <style>body{font-family:system-ui,sans-serif;color:#141A33;max-width:640px;margin:40px auto;padding:0 20px}
-  h1{font-size:19px;color:#0B1A45;margin:0 0 4px}p.s{color:#6B7196;font-size:13px;margin:0 0 22px}
-  table{width:100%;border-collapse:collapse;font-size:14px}td{padding:10px 8px;border-bottom:1px solid #E4E7F2}
-  td.k{color:#6B7196;width:42%}footer{margin-top:24px;font-size:12px;color:#6B7196;line-height:1.7}</style></head><body>
-  <h1>SF Digital Solutions LK — registration receipt</h1>
-  <p class="s">This is an acknowledgement of the details you submitted. Official confirmation comes from our team.</p>
-  <table>${rows.map(r => `<tr><td class="k">${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join('')}</table>
-  <footer>Keep your Reference ID for the second installment.<br>Questions: WhatsApp 078 519 4631.</footer>
-  </body></html>`;
+
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(state.refId)} — SF Digital Solutions LK receipt</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#EEF0F8;font-family:Inter,system-ui,sans-serif;color:#141A33;padding:28px 16px}
+  .sheet{max-width:660px;margin:0 auto;background:#fff;border-radius:20px;overflow:hidden;
+    box-shadow:0 18px 50px rgba(11,26,69,.16)}
+  .head{position:relative;padding:26px 30px;color:#fff;overflow:hidden;
+    background:linear-gradient(120deg,#0B1A45,#25286E 52%,#5B2FAE)}
+  .head::after{content:"";position:absolute;right:-70px;top:-90px;width:260px;height:260px;border-radius:50%;
+    background:radial-gradient(circle,rgba(46,196,182,.4),transparent 68%)}
+  .head-row{position:relative;z-index:2;display:flex;align-items:center;gap:13px}
+  .head img{width:52px;height:52px;border-radius:50%;background:#fff;padding:2px;object-fit:cover}
+  .head h1{font-family:Sora,sans-serif;font-size:16px;margin:0;letter-spacing:.2px}
+  .head p{margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.75)}
+  .head .kind{position:relative;z-index:2;margin-top:20px;font-family:Sora,sans-serif;font-size:23px;font-weight:800;letter-spacing:-.4px}
+  .head .sub{position:relative;z-index:2;font-size:12px;color:rgba(255,255,255,.78);margin-top:5px}
+  .amt{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;
+    padding:20px 30px;background:#F7F9FF;border-bottom:1px solid #E4E7F2}
+  .amt .k{font-size:11px;color:#6B7196}
+  .amt .v{font-family:Sora,sans-serif;font-size:27px;font-weight:800;color:#0B1A45;line-height:1.15}
+  .amt .ref{text-align:right}
+  .amt .ref .v{font-size:17px;letter-spacing:.6px}
+  .paid{display:inline-block;margin-top:6px;font-size:10.5px;font-weight:700;color:#17A673;
+    background:#F1FAF6;border:1px solid #BFE8D7;border-radius:999px;padding:4px 10px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  td{padding:12px 30px;border-bottom:1px solid #EDEFF7;vertical-align:top}
+  td.k{color:#6B7196;width:40%;font-size:12.5px}
+  .bal{margin:0;padding:15px 30px;background:#FFF8EC;border-bottom:1px solid #F3E2C6;font-size:12.5px;color:#7A5A22}
+  footer{padding:20px 30px 26px;font-size:11.5px;color:#6B7196;line-height:1.75}
+  footer strong{color:#0B1A45}
+  .print{display:block;margin:20px auto 0;border:none;cursor:pointer;background:linear-gradient(135deg,#2F5BEA,#7C3AED);
+    color:#fff;font:600 13px Inter,sans-serif;padding:12px 22px;border-radius:10px}
+  @media print{body{background:#fff;padding:0}.sheet{box-shadow:none;border-radius:0}.print{display:none}}
+</style></head><body>
+<div class="sheet">
+  <div class="head">
+    <div class="head-row">
+      ${logo ? `<img src="${logo}" alt="">` : ''}
+      <div><h1>SF Digital Solutions LK</h1><p>Classes &amp; Training · Panadura · WhatsApp 078 519 4631</p></div>
+    </div>
+    <div class="kind">Registration receipt</div>
+    <div class="sub">${esc(c ? c.name.replace(/&amp;/g,'&') : '')}</div>
+  </div>
+  <div class="amt">
+    <div><div class="k">Amount paid</div><div class="v">${rs(q.dueNow)}</div><span class="paid">Slip submitted</span></div>
+    <div class="ref"><div class="k">Reference ID</div><div class="v">${esc(state.refId)}</div></div>
+  </div>
+  ${q.later > 0 ? `<p class="bal">Balance ${rs(q.later)} due before your 8th session. Use this Reference ID in the “Pay 2nd installment” tab.</p>` : ''}
+  <table>${rows.map(r => `<tr><td class="k">${esc(r[0])}</td><td>${esc(r[1] || '—')}</td></tr>`).join('')}</table>
+  <footer>
+    <strong>Keep this receipt.</strong> Idhu neenga submit panna details-oda acknowledgement. Official confirmation namma team-la irundhu WhatsApp / Email-la varum.<br>
+    Ethaavadhu thavaru irundhaa, indha Reference ID-oda WhatsApp 078 519 4631-ku message pannunga.
+  </footer>
+</div>
+<button class="print" onclick="window.print()">Print / Save as PDF</button>
+</body></html>`;
+
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([html], {type:'text/html'}));
   a.download = state.refId + '-receipt.html';
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  toast('Receipt download aayiduchu — open panni Print → Save as PDF pannalam.');
 }
 
 function copyRef(id){
