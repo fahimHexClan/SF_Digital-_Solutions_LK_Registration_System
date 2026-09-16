@@ -12,19 +12,20 @@
 <style>
   :root{
     --navy:#0B1A45;
-    --blue:#2F5BEA;
-    --violet:#7C3AED;
-    --ink:#141A33;
+    --blue:#3B63E6;
+    --violet:#7C4FE0;
+    --ink:#1B2140;
     --muted:#6B7196;
-    --line:#E4E7F2;
-    --bg:#F5F6FB;
+    --line:#E7E9F4;
+    --bg:#F6F7FC;
     --panel:#FFFFFF;
-    --green:#17A673;
-    --green-soft:#F1FAF6;
+    --green:#1FA97A;
+    --green-deep:#158A63;
+    --green-soft:#EFFAF5;
     --red:#DC3D43;
     --amber:#B4690E;
-    --cream:#FFF7EF;
-    --radius:16px;
+    --cream:#FAF6F0;
+  --radius:16px;
     --shadow:0 10px 30px rgba(20,26,51,.08);
     --shadow-sm:0 4px 12px rgba(20,26,51,.06);
     --focus:0 0 0 3px rgba(47,91,234,.35);
@@ -106,12 +107,13 @@
 
   /* ---------- Course cards ---------- */
   .course-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-  .course-card{border:1.5px solid var(--line);border-radius:14px;background:#fff;overflow:hidden;
+  .course-card{border:1.5px solid var(--line);border-radius:16px;background:#fff;overflow:hidden;
     display:flex;flex-direction:column;text-align:left;padding:0;cursor:pointer;position:relative;-webkit-tap-highlight-color:transparent;
+    isolation:isolate;
     transition:border-color .18s, box-shadow .18s, transform .18s;}
   .course-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 12px 24px rgba(20,26,51,.1);}
   .course-card[aria-pressed="true"]{border-color:var(--violet);box-shadow:0 12px 26px rgba(124,58,237,.16);}
-  .course-art{display:block;height:124px;position:relative;flex-shrink:0;overflow:hidden;background:#0B1A45;}
+  .course-art{display:block;height:124px;position:relative;flex-shrink:0;overflow:hidden;background:#0B1A45;border-radius:16px 16px 0 0;}
   .course-art .art-svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
   .art-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
     transition:transform .5s cubic-bezier(.2,.7,.3,1);}
@@ -125,11 +127,16 @@
   .art-level{position:absolute;right:12px;bottom:12px;z-index:3;font-size:10.5px;font-weight:600;color:#fff;
     background:rgba(11,26,69,.42);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 10px;
     backdrop-filter:blur(6px);}
-  .course-card .check{position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;
-    border:1.5px solid rgba(255,255,255,.75);background:rgba(255,255,255,.25);z-index:2;}
-  .course-card[aria-pressed="true"] .check{background:#fff;border-color:#fff;}
-  .course-card[aria-pressed="true"] .check::after{content:"";position:absolute;left:6px;top:9px;width:9px;height:5px;
-    border-left:2px solid var(--violet);border-bottom:2px solid var(--violet);transform:rotate(-45deg);}
+  .course-card .check{position:absolute;top:11px;right:11px;width:26px;height:26px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;z-index:4;
+    background:rgba(11,26,69,.34);border:1.5px solid rgba(255,255,255,.65);
+    box-shadow:0 2px 8px rgba(11,26,69,.22);backdrop-filter:blur(3px);
+    transition:background .18s,border-color .18s,transform .18s;}
+  .course-card:hover .check{border-color:#fff;}
+  .course-card[aria-pressed="true"] .check{background:var(--violet);border-color:var(--violet);
+    box-shadow:0 3px 10px rgba(124,79,224,.4);transform:scale(1.06);}
+  .course-card .check svg{width:13px;height:13px;opacity:0;transform:scale(.5);transition:opacity .15s,transform .15s;}
+  .course-card[aria-pressed="true"] .check svg{opacity:1;transform:scale(1);}
   .course-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1;}
   .course-body h4{margin:0;font-size:13.5px;font-family:'Sora',sans-serif;color:var(--navy);font-weight:700;line-height:1.35;}
   .course-body .cdesc{margin:0;font-size:11.5px;color:var(--muted);line-height:1.55;}
@@ -228,11 +235,19 @@
   .cover-brand h1{font-family:'Sora',sans-serif;font-size:15px;margin:0;letter-spacing:.1px;}
   .cover-brand p{margin:2px 0 0;font-size:11px;color:rgba(255,255,255,.72);}
   .cover .enrol-pill{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28);color:#fff;box-shadow:none;backdrop-filter:blur(4px);}
+  .cover-body{display:flex;align-items:center;justify-content:space-between;gap:24px;}
+  .cover-text{flex:1 1 auto;min-width:0;}
   .cover h2{font-family:'Sora',sans-serif;font-size:31px;line-height:1.14;margin:0 0 10px;letter-spacing:-.7px;font-weight:800;max-width:15ch;}
-  .cover p.lede{margin:0;font-size:13px;color:rgba(255,255,255,.82);line-height:1.65;max-width:46ch;}
+  .cover p.lede{margin:0;font-size:13px;color:rgba(255,255,255,.82);line-height:1.65;max-width:44ch;}
   .cover-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;}
   .cover-chips span{font-size:11px;font-weight:600;padding:6px 11px;border-radius:999px;
     background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);}
+  .cover-photos{position:relative;flex:0 0 auto;width:190px;height:150px;display:block;}
+  .cp{position:absolute;object-fit:cover;border-radius:14px;border:3px solid rgba(255,255,255,.85);
+    box-shadow:0 14px 30px rgba(11,26,69,.35);}
+  .cp-1{width:150px;height:118px;left:0;top:16px;z-index:2;}
+  .cp-2{width:110px;height:90px;right:0;top:0;z-index:1;opacity:.94;}
+  @media(max-width:640px){.cover-body{flex-direction:column;align-items:flex-start;}.cover-photos{display:none;}}
 
   /* ---------- Upload ---------- */  /* ---------- Upload ---------- */
   .upload-zone{width:100%;border:2px dashed var(--line);border-radius:14px;padding:32px 20px;text-align:center;background:#fff;cursor:pointer;transition:border-color .18s,background .18s;}
@@ -372,29 +387,18 @@
     <svg class="cover-art" viewBox="0 0 900 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <linearGradient id="cvA" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#7C3AED" stop-opacity=".55"/><stop offset="1" stop-color="#2F5BEA" stop-opacity="0"/>
+          <stop offset="0" stop-color="#7C4FE0" stop-opacity=".5"/><stop offset="1" stop-color="#3B63E6" stop-opacity="0"/>
         </linearGradient>
         <linearGradient id="cvB" x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0" stop-color="#2EC4B6" stop-opacity=".38"/><stop offset="1" stop-color="#2EC4B6" stop-opacity="0"/>
+          <stop offset="0" stop-color="#2EC4B6" stop-opacity=".32"/><stop offset="1" stop-color="#2EC4B6" stop-opacity="0"/>
         </linearGradient>
         <pattern id="cvDots" width="22" height="22" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="1.3" fill="#fff" opacity=".15"/>
+          <circle cx="2" cy="2" r="1.3" fill="#fff" opacity=".13"/>
         </pattern>
       </defs>
       <rect width="900" height="300" fill="url(#cvDots)"/>
-      <circle cx="790" cy="40" r="170" fill="url(#cvA)"/>
-      <circle cx="860" cy="270" r="130" fill="url(#cvB)"/>
-      <g opacity=".5" stroke="#fff" stroke-width="2" fill="none">
-        <path d="M612 96h150a14 14 0 0 1 14 14v78a14 14 0 0 1-14 14H612a14 14 0 0 1-14-14v-78a14 14 0 0 1 14-14Z"/>
-        <path d="M598 130h178M660 216h54"/>
-      </g>
-      <g opacity=".85" fill="#fff">
-        <path d="M652 158l22 13-22 13v-26Z" opacity=".75"/>
-        <circle cx="616" cy="113" r="4"/><circle cx="632" cy="113" r="4" opacity=".6"/><circle cx="648" cy="113" r="4" opacity=".4"/>
-      </g>
-      <g opacity=".35" stroke="#fff" stroke-width="2" stroke-linecap="round">
-        <path d="M60 250q10-40 4-78M86 246q8-32 3-62"/>
-      </g>
+      <circle cx="800" cy="30" r="170" fill="url(#cvA)"/>
+      <circle cx="70" cy="280" r="130" fill="url(#cvB)"/>
     </svg>
     <div class="cover-inner">
       <div class="cover-top">
@@ -407,10 +411,18 @@
         </div>
         <div class="enrol-pill"><span class="dot"></span><span>Enrolment open for this batch</span></div>
       </div>
-      <h2 id="heroTitle">Course registration</h2>
-      <p class="lede" id="heroDesc"></p>
-      <div class="cover-chips">
-        <span>7 courses</span><span>Tamil · Sinhala · English</span><span>Certificate included</span><span>Pay in 2 installments</span>
+      <div class="cover-body">
+        <div class="cover-text">
+          <h2 id="heroTitle">Course registration</h2>
+          <p class="lede" id="heroDesc"></p>
+          <div class="cover-chips">
+            <span>7 courses</span><span>Tamil · Sinhala · English</span><span>Certificate included</span><span>Pay in 2 installments</span>
+          </div>
+        </div>
+        <div class="cover-photos" aria-hidden="true">
+          <img class="cp cp-1" src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=340&h=340&q=72" alt="">
+          <img class="cp cp-2" src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?auto=format&fit=crop&w=260&h=260&q=72" alt="">
+        </div>
       </div>
     </div>
   </section>
@@ -467,7 +479,7 @@ const CONFIG = {
    refer = flat price for the Refer & Earn offer (optional)
    =========================================================== */
 const COURSES = [
-  {id:'compbasics', level:'Beginner · 6 weeks', img:'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=720&h=420&q=72', name:'Professional Computer Basics', art:'monitor', a:'#4C7DDB', b:'#22356B',
+  {id:'compbasics', level:'Beginner · 3 months', img:'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=720&h=420&q=72', name:'Professional Computer Basics', art:'monitor', a:'#4C7DDB', b:'#22356B',
    total:8800,  full:5600,  inst1:4000, inst2:2600,
    desc:'Keyboard and mouse handling, Windows, MS Word and Excel intro, internet, email and WhatsApp — the right starting point for complete beginners.'},
   {id:'diploma', level:'Diploma · 6 months', img:'https://images.unsplash.com/photo-1569653402334-2e98fbaa80ee?auto=format&fit=crop&w=720&h=420&q=72',   name:'Diploma in IT', art:'diploma', a:'#8A66C9', b:'#4E2F86',
@@ -485,7 +497,7 @@ const COURSES = [
   {id:'metaads', level:'Intermediate · 4 weeks', img:'https://images.unsplash.com/photo-1563461660947-507ef49e9c47?auto=format&fit=crop&w=720&h=420&q=72',   name:'Facebook &amp; Instagram Ads', art:'social', a:'#D9647F', b:'#96304C',
    total:10000, full:8500,  inst1:6000, inst2:5000,
    desc:'Create, manage and optimise Meta ad campaigns — audiences, budgets, creatives and reporting.'},
-  {id:'sinhala', level:'Beginner · 8 weeks', img:'https://images.unsplash.com/photo-1565688256340-249dbb31f25d?auto=format&fit=crop&w=720&h=420&q=72',   name:'Spoken Sinhala', art:'speech', a:'#5A78DB', b:'#2F3F8F',
+  {id:'sinhala', level:'Beginner · 3 months', img:'https://images.unsplash.com/photo-1565688256340-249dbb31f25d?auto=format&fit=crop&w=720&h=420&q=72',   name:'Spoken Sinhala', art:'speech', a:'#5A78DB', b:'#2F3F8F',
    total:9500,  full:8000,  inst1:4500, inst2:4000,
    desc:'Speak Sinhala with confidence — daily conversation, pronunciation and practical workplace phrases.'}
 ];
@@ -782,7 +794,7 @@ function pressable(cls, pressed, action, inner, label){
 function courseCards(selectedId, handler, bodyFor){
   return `<div class="course-grid">` + COURSES.map(c => pressable(
     'course-card', selectedId === c.id, `${handler}('${c.id}')`,
-    `<span class="check"></span><div class="course-art">${courseArt(c)}</div><div class="course-body">${bodyFor(c)}</div>`
+    `<span class="check">${ICON.tick}</span><div class="course-art">${courseArt(c)}</div><div class="course-body">${bodyFor(c)}</div>`
   )).join('') + `</div>`;
 }
 
